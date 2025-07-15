@@ -22,6 +22,6 @@ elif age < 13:
 elif age == 21:
     print("Congrats on your 21st!")                 # check if age is 21 (against the specified conditions) and outputs the appropriate message
 else:
-    print("Age is but a number.")                   # for any other age except the above conditions, output appropriate message
+    print("Age is but a number.")                   # for any other age except the above conditions, outputs appropriate message
 
 
