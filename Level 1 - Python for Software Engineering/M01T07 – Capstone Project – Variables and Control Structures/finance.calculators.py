@@ -1,73 +1,100 @@
-# pseudo code:
+# Pseudocode:
 
-# 1. import the necessary libraries
-# 2. define functions for investment and bond calculations
-# 3. create a main function to handle user input and call the appropriate calculation function 
-# 2. either Investment - to calculate the future value of an investment
-# 3. or Bond - to calculate the amount you'll have to pay on a home loan.   
-# 4. If the user chooses Investment, they should be prompted to enter either simple or compound interest, the principal amount, the interest rate, and the number of years. The program should then calculate and display the future value of the investment.
-# 5. If the user chooses Bond, they should be prompted to enter the present value, interest rate, number of months, and whether they want to calculate the monthly repayment or the present value.
+# 1. Import required libraries
+# 2. Define functions for investment and bond calculations
+# 3. Implement a main function to manage user input and trigger the correct calculation
+# 4. For Investment: calculate future value based on user input
+# 5. For Bond: calculate monthly repayment or present value based on user input
 
-# python code:
+# Python code:
 
-# main menu for investment and bond calculations
+# Main menu for investment and bond calculations
 def main():
-    print("Choose either 'Investment' or 'Bond' from the menu below to proceed:")
-    print("Investment - to calculate the amount of interest you'll earn on your investment.")
-    print("Bond - to calculate the amount you'll have to pay on a home loan.")
+    print("Select 'Investment' or 'Bond' from the options below to continue:")
+    print("Investment - calculate the interest earned on your investment.")
+    print("Bond - calculate the repayment amount for a home loan.")
 
-    # prompt user to choose between Investment or Bond
-    choice = input("Enter your calculation type (Investment or Bond ): ").strip().lower()                # and convert the input to lowercase to handle case insensitivity
+    # Ask user to select Investment or Bond
+    choice = input("Enter your calculation type (Investment or Bond): ").strip().lower()
     
-    # call the appropriate function based on user choice
+    # Call the relevant function based on user selection
     if choice == 'investment':
         investment_calculation()
     elif choice == 'bond':
         bond_calculation()
     else:
-        print("Invalid choice. Please try again.")                                           # If the user doesn’t type in a valid input, show an appropriate error message.
-        main()
+        print("Invalid choice. Please try again.")  # Display error for invalid input
+    while True:
+        choice = input("Enter your calculation type (Investment or Bond): ").strip().lower()
+        if choice == 'investment':
+            investment_calculation()
+            break
+        elif choice == 'bond':
+            bond_calculation()
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
-# function to calculate investment value based on simple or compound interest
+# Function to calculate investment value using simple or compound interest
 def investment_calculation():
     print("Investment Calculation")
-    interest_type = input("Choose 'simple' or 'compound' interest: ").strip().lower()        # and convert the input to lowercase to handle case insensitivity
-    
-    # If the user doesn’t type in a valid input, show an appropriate error message.
-    if interest_type not in ['simple', 'compound']:
-        print("Invalid interest type. Please try again.")
-        investment_calculation()
-        return
-    
-    #A is the future value of the investment, P is the principal amount, r is the interest rate and t is the number of years
+    while True:
+        interest_type = input("Select 'simple' or 'compound' interest: ").strip().lower()
+        if interest_type in ['simple', 'compound']:
+            break
+        else:
+            print("Invalid interest type. Please try again.")
 
-    # request user input for principal, interest rate, and time period
-    P = float(input("Enter the principal amount: "))                                     # prompt user to enter the principal amount and convert it to float
-    r = float(input("Enter the interest rate (as a percentage): ")) / 100                # prompt user to enter the interest, Convert percentage to decimal and convert it to float            
-    t = float(input("Enter the number of years: "))                                      # prompt user to enter the number of years and convert it to float
+    # A: future value, P: principal, r: interest rate, t: years, n: compounding periods per year
+    # Get principal, interest rate, duration, and compounding frequency from user
+    while True:
+        try:
+            P = float(input("Enter the principal amount: "))
+            r = float(input("Enter the annual interest rate (as a percentage): ")) / 100
+            t = float(input("Enter the number of years: "))
+            break
+        except ValueError:
+            print("Invalid entry. Please enter numeric values.")
 
-    # Calculate future value based on interest type
+    # Compute future value based on selected interest type
     if interest_type == 'simple':
         A = P * (1 + r * t)
     elif interest_type == 'compound':
-        A = P * (1 + r) ** t
-    else:
-        print("Invalid interest type. Please try again.")                                # If the user doesn’t type in a valid input, show an appropriate error message.
-        return
-    print(f"The future value of the investment is: {A:.2f}")                             # Display the future value rounded to two decimal places
+        print("Compounding frequency options: 1 for annual, 12 for monthly, 4 for quarterly, etc.")
+        while True:
+            try:
+                n = int(input("Enter the number of compounding periods per year (e.g., 1 for annual, 12 for monthly): "))
+                if n > 0:
+                    break
+                else:
+                    print("Please enter a positive integer for compounding frequency.")
+            except ValueError:
+                print("Invalid entry. Please enter a positive integer.")
+        A = P * (1 + r / n) ** (n * t)
+    print(f"The future value of the investment is: {A:.2f}")
 
-def bond_calculation():                                                                  # function to calculate bond repayment
+def bond_calculation():  # Function to calculate bond repayment
 
-    #p is the present value of the house, i is the monthly interest rate and n is the number of months
+    # p: present value, i: monthly interest rate, n: number of months
 
     print("Bond Calculation")
-    # request user input for present value, interest rate, and number of months
-    p = float(input("Enter the present value of the house: "))                             # prompt user to enter the present value of the house and convert it to float
-    i = float(input("Enter the monthly interest rate (as a percentage): ")) / 100 / 12     # prompt user to enter the monthly interest rate, Convert percentage to decimal and convert it to float, then divide by 12 to get the monthly rate 
-    n = int(input("Enter the number of months: "))                                         # prompt user to enter the number of months and convert it to an intiger 
+    # Get present value, interest rate, and repayment period from user
+    while True:
+        try:
+            p = float(input("Enter the present value of the house: "))  # Get house value and convert to float
+            i = float(input("Enter the monthly interest rate (as a percentage): ")) / 100 / 12  # Get interest rate, convert to monthly decimal
+            n = int(input("Enter the number of months: "))  # Get repayment period in months
+            break
+        except ValueError:
+            print("Invalid entry. Please enter numeric values.")
 
-# Calculate the monthly repayment using the formula
+    # Calculate monthly repayment using the amortization formula:
+    # repayment = (p * i) / (1 - (1 + i) ** -n)
+    # where p = present value of the house, i = monthly interest rate, n = number of months.
+    # This formula determines the fixed monthly payment required to pay off a loan over a specified period.
     repayment = (p * i) / (1 - (1 + i) ** -n)
-    print(f"The monthly repayment on the bond is: {repayment:.2f}")                       # Display the monthly repayment rounded to two decimal places
-if __name__ == "__main__":                                                                # This ensures that the main function is called when the script is run directly
-    main() 
+    print(f"The monthly repayment on the bond is: {repayment:.2f}")  # Show result rounded to two decimals
+    print(f"The monthly repayment on the bond is: {repayment:.2f}")  # Show result rounded to two decimals
+
+if __name__ == "__main__":  # Run main function if script is executed directly
+    main()
