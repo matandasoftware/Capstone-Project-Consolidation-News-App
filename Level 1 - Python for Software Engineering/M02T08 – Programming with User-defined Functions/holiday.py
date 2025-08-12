@@ -12,7 +12,7 @@ def hotel_cost(num_nights):
         num_nights (int): Number of nights to stay at the hotel.
 
     Returns:
-        int: Total hotel cost in South African Rand (ZAR).
+        float: Total hotel cost in South African Rand (ZAR).
     """
     price_per_night = 1200.50  # Cost per night in ZAR (float)
     return num_nights * price_per_night
@@ -26,17 +26,17 @@ def plane_cost(city_flight):
         city_flight (str): The city to which the user will fly.
 
     Returns:
-        int: Flight cost in South African Rand (ZAR).
+        float: Flight cost in South African Rand (ZAR).
     """
+    city_prices = {
+        "cape town": 2500.75,
+        "durban": 1800.40,
+        "johannesburg": 2200.99,
+        "port elizabeth": 2000.25
+    }
     city = city_flight.strip().lower()
-    if city == "cape town":
-        return 2500.75
-    elif city == "durban":
-        return 1800.40
-    elif city == "johannesburg":
-        return 2200.99
-    elif city == "port elizabeth":
-        return 2000.25
+    if city in city_prices:
+        return city_prices[city]
     else:
         print("Warning: City not recognized. Using default flight price.")
         return 2100.00  # Default price for other cities
@@ -50,7 +50,7 @@ def car_rental(rental_days):
         rental_days (int): Number of days to rent the car.
 
     Returns:
-        int: Total car rental cost in South African Rand (ZAR).
+        float: Total car rental cost in South African Rand (ZAR).
     """
     daily_rate = 400.80  # Cost per day in ZAR (float)
     return rental_days * daily_rate
@@ -66,7 +66,7 @@ def holiday_cost(num_nights, city_flight, rental_days):
         rental_days (int): Number of days for car rental.
 
     Returns:
-        int: Total holiday cost in South African Rand (ZAR).
+        float: Total holiday cost in South African Rand (ZAR).
     """
     return (
         hotel_cost(num_nights)
@@ -110,5 +110,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
