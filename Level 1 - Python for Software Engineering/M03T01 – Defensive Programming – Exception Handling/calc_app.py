@@ -1,113 +1,214 @@
-# pseudo code for a simple calculator app
 
-# 1. Create a simple mathematical calculator app that can perform addition, subtraction, multiplication, and division.
-# 2. the app should show a menu with options for either calculation, view saved equations, and exit the app.
-# 3. if user choses to perform a calculation, prompt for two numbers and an operator.
-# 4. perform the calculation based on the operator and display the result.
-# 5. after the calculation display the result must be saved to a file equations.txt.
-# 6. if the user chooses to view saved equations, read from the file and display the equations.
+# Simple Calculator Application
+# This script allows users to perform basic arithmetic operations, view saved equations, and exit the program.
 
-# python code
+import sys
 
-"""defining functions for the calculator app to perform basic arithmetic
- operations such as addition, subtraction, multiplication, and division respectively."""
-
-def add(x, y):
-    return x + y
-
-def subtract(x, y):
-    return x - y
-
-def multiply(x, y):
-    return x * y
-
-def divide(x, y):
-    if y == 0:
-        raise ValueError("Cannot divide by zero.")
-    return x / y
-# function to save the equation to a file equations.txt
-def save_equation(equation):
-    with open("equations.txt", "a") as file:
-        file.write(equation + "\n")
-# function to view saved equations from the file equations.txt
-def view_saved_equations():
+def parse_number(input_str):
+    """
+    Convert the input string to an integer or float.
+    Returns an int if the input is a whole number, or a float if it contains a decimal point.
+    Raises ValueError if the input is not a valid number.
+    """
     try:
-        with open("equations.txt", "r") as file:
+        if '.' in input_str:
+            return float(input_str)
+        return int(input_str)
+    except (ValueError, TypeError):
+        raise ValueError(
+            "Invalid input. Please enter an integer, a float (e.g., 5 or 3.14), or 'b' to return."
+        )
+
+def get_user_input(prompt):
+    """
+    Prompt the user for input and handle interruptions gracefully.
+    Returns the user's input as a string, or None if input is interrupted.
+    """
+    try:
+        return input(prompt)
+    except EOFError:
+        print("\nInput interrupted. Returning to main menu.")
+        return None
+    except Exception as exc:
+        print(f"Unexpected error: {exc}")
+        raise
+
+def calculate(x, y, operator):
+    """
+    Perform a basic arithmetic operation on two numbers.
+    Supported operators: +, -, *, /
+    Raises ValueError for invalid operators or division by zero.
+    """
+    if operator == '+':
+        return x + y
+    if operator == '-':
+        return x - y
+    if operator == '*':
+        return x * y
+    if operator == '/':
+        if y == 0:
+            raise ValueError("Cannot divide by zero.")
+        return x / y
+    raise ValueError("Invalid operator. Supported operators are: +, -, *, /")
+
+def save_equation(equation):
+    """
+    Save the given equation string to the 'equations.txt' file.
+    Appends the equation to the file, creating it if it doesn't exist.
+    """
+    try:
+        with open("equations.txt", "a", encoding="utf-8") as file:
+            file.write(equation + "\n")
+    except Exception as exc:
+        print(f"Failed to save equation: {exc}")
+
+def view_saved_equations():
+    """
+    Display all equations saved in the 'equations.txt' file.
+    If the file does not exist or is empty, notifies the user.
+    """
+    try:
+        with open("equations.txt", "r", encoding="utf-8") as file:
             equations = file.readlines()
             if equations:
                 print("Saved Equations:")
                 for eq in equations:
                     print(eq.strip())
-# if no equations are saved print a message or the exception
             else:
                 print("No saved equations found.")
     except FileNotFoundError:
         print("No saved equations found.")
-# function to parse the input number and handle both int and float types
-def parse_number(input_str):
-#Try to parse input as int, fallback to float if needed
-    try:
-        if '.' in input_str:
-            return float(input_str)
-        else:
-            return int(input_str)
-    except ValueError:
-        raise ValueError("Invalid input. Please enter a numeric value.")
-    
-""" This code defines a simple calculator app main menu
- asks the user to choose an option to perform a calculation,
- view saved equations, or exit the app."""
+    except Exception as exc:
+        print(f"Error reading equations: {exc}")
 
-# main function to run the calculator app
 def calculator_app():
-    # This is the main loop of the calculator app
+    """
+    Main loop for the calculator application.
+    Presents a menu to the user to perform calculations, view saved equations, or exit.
+    Handles user input and validation for all operations.
+    """
+
     while True:
-        print("\nSimple Calculator App\nplease select an option which you'd like to perform:")
-        print("1. Perform Calculation\n2. View Saved Equations\n3. Exit")
-        
-        choice = input("Choose an option (1-3): ")
-        
-        if choice == '1':
-            try:
+        try:
+            print("\nSimple Calculator App\nPlease select an option:")
+            print("1. Perform Calculation\n2. View Saved Equations\n3. Exit")
+            choice_str = get_user_input("Choose an option (1-3): ")
+            if choice_str is None:
+                continue
+            if not choice_str.isdigit():
+                raise ValueError("Invalid input. Please enter a number (1-3).")
+            choice = int(choice_str)
+            if choice not in [1, 2, 3]:
+                raise ValueError("Invalid choice. Please enter 1, 2, or 3.")
+        except ValueError as exc:
+            print(f"Error: {exc}")
+            print("Restarting program...\n")
+            continue
+
+        if choice == 1:
+            # User chooses to perform a calculation
+            # First number entry
+            while True:
+                num1_str = get_user_input(
+                    "Enter first number (integer or decimal, or 'b' to return to main menu): "
+                )
+                if num1_str is None or num1_str.lower() == 'b':
+                    break
                 try:
-                    # prompt user for two numbers and an operator
-                    num1_str = input("Enter first number: ")
-                    num1 = parse_number(num1_str)              # parse the first number
-                    num2_str = input("Enter second number: ")
-                    num2 = parse_number(num2_str)              # parse the second number
+                    num1 = parse_number(num1_str)
+                except ValueError as exc:
+                    print(exc)
+                    continue
+
+                # Second number entry
+                while True:
+                    num2_str = get_user_input(
+                        "Enter second number (integer or decimal, or 'b' to return to main menu): "
+                    )
+                    if num2_str is None or num2_str.lower() == 'b':
+                        break
+                    try:
+                        num2 = parse_number(num2_str)
+                    except ValueError as exc:
+                        print(exc)
+                        continue
+
+                    # Operator entry
+                    while True:
+                        operator = get_user_input("Enter operator (+, -, *, /): ")
+                        if operator in ['+', '-', '*', '/']:
+                            try:
+                                result = calculate(num1, num2, operator)
+                                equation = f"{num1} {operator} {num2} = {result}"
+                                print(f"Result: {equation}")
+                                save_equation(equation)
+                            except Exception as exc:
+                                print(f"Calculation error: {exc}")
+                            break
+                        else:
+                            print("Invalid operator. Please enter one of: +, -, *, /")
+                    break  # Exit second number entry after calculation
+                break  # Exit first number entry after calculation
+
+        elif choice == 2:
+            # User chooses to view saved equations
+            view_saved_equations()
+        elif choice == 3:
+            # User chooses to exit the application
+            print("Exiting the calculator app. Goodbye!")
+            sys.exit(0)
+
+        if choice == 1:
+            # User chooses to perform a calculation
+            # First number entry
+            while True:
+                num1_str = get_user_input("Enter first number (integer or decimal, or 'b' to return to main menu): ")
+                if num1_str is None or num1_str.lower() == 'b':
+                    break
+                try:
+                    num1 = parse_number(num1_str)
                 except ValueError as e:
                     print(e)
                     continue
-                # prompt user for an operator and perform the calculation
-                print("Available operators: + to add, - to minus, * to multiply, / to divide")
-                operator = input("Enter operator (+, -, *, /): ")
-                if operator not in ['+', '-', '*', '/']:
-                    raise ValueError("Invalid operator. Please choose from +, -, *, /.")
-                if operator == '+':
-                    result = add(num1, num2)
-                elif operator == '-':
-                    result = subtract(num1, num2)
-                elif operator == '*':
-                    result = multiply(num1, num2)
-                elif operator == '/':
-                    result = divide(num1, num2)
-                # format the equation and save it to the file
-                equation = f"{num1} {operator} {num2} = {result}"
-                print(f"Result: {equation}")
-                # save the equation to the file
-                save_equation(equation)
-            except ValueError as e:
-                print(f"Error: {e}")
-        # if user chooses to view saved equations, call the function to view them
-        elif choice == '2':
-            view_saved_equations()
-        # if user chooses to exit the app, break the loop
-        elif choice == '3':
-            print("Exiting the calculator app.")
-            break
-        else:
-            # if the user enters an invalid choice, print an error message
-            print("Invalid choice. Please try again.")
 
+                # Second number entry
+                while True:
+                    num2_str = get_user_input("Enter second number (integer or decimal, or 'b' to return to main menu): ")
+                    if num2_str is None or num2_str.lower() == 'b':
+                        break
+                    try:
+                        num2 = parse_number(num2_str)
+                    except ValueError as e:
+                        print(e)
+                        continue
+
+                    # Operator entry
+                    while True:
+                        operator = get_user_input("Enter operator (+, -, *, /): ")
+                        if operator in ['+', '-', '*', '/']:
+                            try:
+                                result = calculate(num1, num2, operator)
+                                equation = f"{num1} {operator} {num2} = {result}"
+                                print(f"Result: {equation}")
+                                save_equation(equation)
+                            except Exception as e: 
+                                print(f"Calculation error: {e}")
+                            break
+                        else:
+                            print("Invalid operator. Please enter one of: +, -, *, /")
+                    break  # Exit second number entry after calculation
+                break  # Exit first number entry after calculation
+
+        elif choice == 2:
+            # User chooses to view saved equations
+            view_saved_equations()
+        elif choice == 3:
+            # User chooses to exit the application
+            print("Exiting the calculator app. Goodbye!")
+            sys.exit(0)
+
+
+
+# Entry point for the script
 if __name__ == "__main__":
     calculator_app()
