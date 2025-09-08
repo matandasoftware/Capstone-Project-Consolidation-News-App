@@ -4,6 +4,7 @@ from datetime import datetime
 USER_FILE = "user.txt"
 TASK_FILE = "tasks.txt"
 
+
 def is_valid_date(date_str):
     """
     Validate that a string is a date in YYYY-MM-DD format.
@@ -19,6 +20,7 @@ def is_valid_date(date_str):
         return True
     except ValueError:
         return False
+
 
 def load_users():
     """
@@ -42,6 +44,7 @@ def load_users():
             print(f"Error reading {USER_FILE}: {e}")
     return users
 
+
 def save_user(username, password):
     """
     Append a new user and password to user.txt.
@@ -55,6 +58,7 @@ def save_user(username, password):
             f.write(f"{username}, {password}\n")
     except Exception as e:
         print(f"Error writing to {USER_FILE}: {e}")
+
 
 def load_tasks():
     """
@@ -86,6 +90,7 @@ def load_tasks():
             print(f"Error reading {TASK_FILE}: {e}")
     return tasks
 
+
 def save_all_tasks(tasks):
     """
     Overwrite tasks.txt with the provided list of tasks.
@@ -96,9 +101,14 @@ def save_all_tasks(tasks):
     try:
         with open(TASK_FILE, "w") as f:
             for task in tasks:
-                f.write(f"{task['username']}, {task['title']}, {task['description']}, {task['assigned_date']}, {task['due_date']}, {task['completed']}\n")
+                f.write(
+                    f"{task['username']}, {task['title']}, "
+                    f"{task['description']}, {task['assigned_date']}, "
+                    f"{task['due_date']}, {task['completed']}\n"
+                )
     except Exception as e:
         print(f"Error writing to {TASK_FILE}: {e}")
+
 
 def save_task(task):
     """
@@ -109,9 +119,14 @@ def save_task(task):
     """
     try:
         with open(TASK_FILE, "a") as f:
-            f.write(f"{task['username']}, {task['title']}, {task['description']}, {task['assigned_date']}, {task['due_date']}, {task['completed']}\n")
+            f.write(
+                f"{task['username']}, {task['title']}, {task['description']}, "
+                f"{task['assigned_date']}, {task['due_date']}, "
+                f"{task['completed']}\n"
+            )
     except Exception as e:
         print(f"Error writing to {TASK_FILE}: {e}")
+
 
 def login(users):
     """
@@ -136,9 +151,11 @@ def login(users):
         else:
             print("Invalid username or password. Please try again.\n")
 
+
 def reg_user(users):
     """
-    Register a new user (admin only). Prompts for username and password, checks for duplicates and empty fields, and saves the new user if valid.
+    Register a new user (admin only). Prompts for username and password,
+    checks for duplicates and empty fields, and saves the new user if valid.
 
     Args:
         users (dict): Current users for duplicate checking.
@@ -169,10 +186,12 @@ def reg_user(users):
         else:
             print("Passwords do not match. Try again.\n")
 
+
 def add_task():
     """
     Prompt for and add a new task with input validation and error handling.
-    Prompts for username, title, description, and due date. Validates all fields and date format.
+    Prompts for username, title, description, and due date. Validates all
+    fields and date format.
     Side effects:
         Writes new task to tasks.txt if successful.
     """
@@ -210,6 +229,7 @@ def add_task():
         print("Task added successfully!\n")
         break
 
+
 def view_all(tasks):
     """
     Display all tasks in a user-friendly format.
@@ -228,6 +248,7 @@ def view_all(tasks):
         print(f"  Assigned date: {task['assigned_date']}")
         print(f"  Due date: {task['due_date']}")
         print(f"  Completed: {task['completed']}\n")
+
 
 def view_mine(tasks, username):
     """
@@ -253,7 +274,8 @@ def view_mine(tasks, username):
 def main():
     """
     Main program loop: handles user login and menu navigation.
-    Handles admin-only registration, task addition, viewing, and marking complete.
+    Handles admin-only registration, task addition, viewing, and marking
+    complete.
     """
     users = load_users()
     username = login(users)
@@ -263,7 +285,7 @@ def main():
         print("a  - add task")
         print("va - view all tasks")
         print("vm - view my tasks")
-    # print("mc - mark my task as complete")
+        # print("mc - mark my task as complete")
         print("e  - exit")
         try:
             choice = input("Enter your choice: ").strip().lower()
@@ -284,13 +306,14 @@ def main():
         elif choice == "vm":
             tasks = load_tasks()
             view_mine(tasks, username)
-    # elif choice == "mc":
-    #     mark_complete(username)
+        # elif choice == "mc":
+        #     mark_complete(username)
         elif choice == "e":
             print("Goodbye!")
             break
         else:
             print("Invalid option. Please try again.\n")
+
 
 if __name__ == "__main__":
     main()
