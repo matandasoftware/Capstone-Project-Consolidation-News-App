@@ -1,1 +1,1 @@
-https://github.com/matandasoftware/git_task
+https://github.com/matandasoftware/example_repo.git
