@@ -1,0 +1,378 @@
+
+
+
+
+
+httpbin.org was experiencing 503 Service Temporarily Unavailable errors during 
+testing (tested on Tue, 16 Dec 2025). Multiple attempts to connect to all 
+endpoints (/get, /post, /status/404, /status/403) resulted in 503 errors from 
+the load balancer (Server: awselb/2.0).
+
+Alternative service httpbingo.org was used instead, which provides identical 
+functionality to httpbin.org. Both services:
+
+- Are HTTP request/response testing services
+- Have the same endpoints and API
+- Return the same JSON response format
+- Reflect back request details for debugging
+
+All commands below use httpbingo.org as httpbin.org was completely unavailable.
+
+1. BASIC REQUEST ANALYSIS (GET METHOD)
+
+EXECUTED COMMANDS:
+
+for curl:
+
+ORIGINAL TASK COMMANDS (httpbin.org was down with 503 errors):
+curl -v https://httpbin.org/get
+
+for PowerShell
+
+Invoke-WebRequest -Uri https://httpbin.org/get -Verbose
+
+THE FOLLOWING COMMANDS RUN (using working alternative):
+
+CURL:
+curl -v https://httpbingo.org/get
+
+POWERSHELL:
+Invoke-WebRequest -Uri https://httpbingo.org/get -Verbose
+
+OBSERVATIONS:
+
+Request Headers (What the Client Sends):
+
+CURL:
+- Method: GET /get HTTP/1.1
+- Host: httpbingo.org
+- User-Agent: curl/8.16.0
+- Accept: */*
+
+POWERSHELL:
+
+- Method: GET
+- Accept-Encoding: gzip, deflate, br
+- Host: httpbingo.org
+- User-Agent: Mozilla/5.0 (Windows NT 10.0; Microsoft Windows 10.0.26200; en-ZA) PowerShell/7.5.4
+
+Response Headers (What the Server Sends Back):
+
+CURL:
+
+- HTTP/1.1 200 OK
+- access-control-allow-credentials: true
+- access-control-allow-origin: *
+- content-type: application/json; charset=utf-8
+- date: Tue, 16 Dec 2025 02:57:15 GMT
+- content-length: 565
+- server: Fly/c51817cfd (2025-12-11)
+- via: 1.1 fly.io, 1.1 fly.io
+- fly-request-id: 01KCJHEC4GVJG5Q5YB5SK2GXEB-jnb
+
+POWERSHELL:
+
+- Access-Control-Allow-Credentials: true
+- Access-Control-Allow-Origin: *
+- Date: Tue, 16 Dec 2025 02:49:25 GMT
+- Transfer-Encoding: chunked
+- Server: Fly/c51817cfd (2025-12-11)
+- Content-Type: application/json
+
+HTTP Status Code:
+
+200 OK - Request was successful
+
+Connection Workflow (CURL -v shows more detail):
+
+1. DNS RESOLUTION: Host httpbingo.org:443 resolved to IPv4 66.241.125.232
+2. TCP CONNECTION: Trying 66.241.125.232:443 from local IP 192.168.8.4 port 65086
+3. TLS HANDSHAKE: schannel negotiates SSL/TLS connection, ALPN selects HTTP/1.1
+4. CONNECTION ESTABLISHED: Secured connection to httpbingo.org established
+5. CLIENT SENDS REQUEST: GET /get HTTP/1.1 with headers (Host, User-Agent, Accept)
+6. REQUEST SENT: "Request completely sent off" (0-byte payload for GET)
+7. TLS RENEGOTIATION: Server requests SSL/TLS renegotiation (security)
+8. SERVER RESPONSE: HTTP/1.1 200 OK with response headers
+9. BODY TRANSMISSION: Server sends 565-byte JSON body with request details
+10. CONNECTION KEPT ALIVE: "Connection #0 to host httpbingo.org:443 left intact"
+
+.
+
+2. METHOD INTERACTION (POST for curl vs GET for powershell)
+
+EXECUTED COMMANDS:
+
+for curl
+
+ORIGINAL TASK COMMANDS (httpbin.org was down with 503 errors):
+
+curl -X POST https://httpbin.org/post \
+       -d "key=value"\
+	   -H "Content-Type: application/x-www-form-urlencoded"
+	   
+for PowerShell 
+	   
+Invoke-WebRequest -Uri "https://httpbin.org/post" `
+ -Method Post `
+ -ContentType "application/x-www-form-urlencoded" `
+ -Body "key=value"
+
+ACTUAL COMMANDS RUN (using working alternative):
+
+CURL:
+curl -X POST https://httpbingo.org/post -d "key=value" -H "Content-Type: application/x-www-form-urlencoded"
+
+POWERSHELL:
+Invoke-WebRequest -Uri "https://httpbingo.org/post" `
+  -Method Post `
+  -ContentType "application/x-www-form-urlencoded" `
+  -Body "key=value" `
+  -Verbose
+
+How POST Differs from GET:
+
+1. PAYLOAD: POST sends 9-byte payload ("key=value"), GET sends 0-byte payload
+2. HEADERS: POST includes additional headers:
+   - Content-Length: 9
+   - Content-Type: application/x-www-form-urlencoded
+3. PURPOSE: GET retrieves data, POST submits data to the server
+4. DATA LOCATION: GET data in URL, POST data in request body
+
+Purpose of the Payload (key=value):
+
+- Represents form data being submitted to the server
+- Content-Type "application/x-www-form-urlencoded" tells server how to parse it
+- Format: key=value pairs separated by & (if multiple)
+- This is how HTML forms typically submit data to web servers
+
+How the Payload is Transmitted:
+
+- Sent in the HTTP request BODY (not in the URL)
+- Content-Length header tells server exactly how many bytes to expect (9 bytes)
+- Transmitted after all headers are sent
+- More secure than GET (data not visible in URL/logs)
+
+Server Response Body (IDENTICAL for both CURL and POWERSHELL):
+
+The server reflects the data back showing:
+
+- "method": "POST"
+- "data": "key=value" - Raw body content as received
+- "form": { "key": ["value"] } - Parsed form data
+- "json": null - Not JSON format, so null
+- "files": {} - No files uploaded
+- Status Code: 200 OK - Data successfully received
+
+3. STATUS CODE EXPLORATION
+
+EXECUTED COMMANDS:
+
+for curl:
+
+ORIGINAL TASK COMMANDS (httpbin.org was down with 503 errors):
+
+curl -I https://httpbin.org/status/404
+curl -I https://httpbin.org/status/403
+
+for PowerShell
+
+Invoke-WebRequest -Uri https://httpbin.org/status/404 -Method Head
+Invoke-WebRequest -Uri https://httpbin.org/status/403 -Method Head
+
+ACTUAL COMMANDS RUN (using working alternative):
+
+for curl
+
+CURL (404 Not Found):
+curl -I https://httpbingo.org/status/404
+
+CURL (403 Forbidden):
+curl -I https://httpbingo.org/status/403
+
+for PowerShell
+
+POWERSHELL (404 Not Found):
+Invoke-WebRequest -Uri https://httpbingo.org/status/404 -Method Head -Verbose
+
+POWERSHELL (403 Forbidden):
+Invoke-WebRequest -Uri https://httpbingo.org/status/403 -Method Head -Verbose
+
+note on status codes and their meanings:
+
+404 NOT FOUND:
+--------------
+Status Code: 404
+Meaning: The requested resource does not exist on the server
+
+Why might this occur?
+
+- URL typo or incorrect path
+- Resource was deleted or moved
+- Incorrect routing/endpoint configuration
+- Page or file never existed at that location
+
+Headers Received (CURL):
+
+HTTP/1.1 404 Not Found
+- access-control-allow-credentials: true
+- access-control-allow-origin: *
+- content-type: text/plain; charset=utf-8
+- date: Tue, 16 Dec 2025 02:57:30 GMT
+- server: Fly/c51817cfd (2025-12-11)
+- via: 1.1 fly.io, 1.1 fly.io
+- fly-request-id: 01KCJHETBMYFGD5X1CST5HNDV0-jnb
+
+Headers Received (POWERSHELL):
+
+- Access-Control-Allow-Credentials: true
+- Access-Control-Allow-Origin: *
+- Date: Tue, 16 Dec 2025
+- Server: Fly
+- Via: 1.1 fly.io
+- fly-request-id: (request identifier)
+
+403 FORBIDDEN:
+
+Status Code: 403
+Meaning: Server understood the request but refuses to authorize it
+
+What does this tell you about access restrictions?
+
+- The resource EXISTS but you don't have permission to access it
+- Server recognized you but denied access (authentication ≠ authorization)
+- Could be due to:
+  * Insufficient user privileges
+  * IP address blocking
+  * Geographic restrictions
+  * Rate limiting
+  * Resource requires specific credentials/API keys
+
+Headers Received (CURL):
+
+HTTP/1.1 403 Forbidden
+- access-control-allow-credentials: true
+- access-control-allow-origin: *
+- content-type: text/plain; charset=utf-8
+- date: Tue, 16 Dec 2025 02:57:36 GMT
+- server: Fly/c51817cfd (2025-12-11)
+- via: 1.1 fly.io, 1.1 fly.io
+- fly-request-id: 01KCJHF006K5WJHH3GQ005QZTM-jnb
+
+Headers Received (POWERSHELL):
+
+- Access-Control-Allow-Credentials: true
+- Access-Control-Allow-Origin: *
+- Date: Tue, 16 Dec 2025
+- Server: Fly
+- Via: 1.1 fly.io
+- fly-request-id: (request identifier)
+
+How Errors are Communicated:
+
+1. PRIMARY: Status code (404, 403) in the HTTP response line
+2. HEADERS: Standard response headers still included (Date, Server, CORS, Content-Type)
+3. METHOD: HEAD method (-I in curl, -Method Head in PowerShell) returns only headers, no body
+4. VERBOSE OUTPUT: PowerShell shows "Requested HTTP/1.1 HEAD with 0-byte payload"
+
+4. DOCUMENT COMMANDS AND OBSERVATIONS
+
+COMMANDS AS SPECIFIED IN TASK (Original - httpbin.org):
+
+CURL:
+1. curl -v https://httpbin.org/get
+2. curl -X POST https://httpbin.org/post -d "key=value" -H "Content-Type: application/x-www-form-urlencoded"
+3. curl -I https://httpbin.org/status/404
+4. curl -I https://httpbin.org/status/403
+
+POWERSHELL:
+
+1. Invoke-WebRequest -Uri https://httpbin.org/get -Verbose
+2. Invoke-WebRequest -Uri "https://httpbin.org/post" -Method Post -ContentType "application/x-www-form-urlencoded" -Body "key=value"
+3. Invoke-WebRequest -Uri https://httpbin.org/status/404 -Method Head
+4. Invoke-WebRequest -Uri https://httpbin.org/status/403 -Method Head
+
+ISSUE ENCOUNTERED:
+
+All attempts to connect to httpbin.org resulted in:
+HTTP/1.1 503 Service Temporarily Unavailable
+Server: awselb/2.0
+This indicates the service was completely down at the time of testing.
+
+COMMANDS ACTUALLY EXECUTED (httpbingo.org alternative):
+
+CURL:
+
+1. curl -v https://httpbingo.org/get
+2. curl -X POST https://httpbingo.org/post -d "key=value" -H "Content-Type: application/x-www-form-urlencoded"
+3. curl -I https://httpbingo.org/status/404
+4. curl -I https://httpbingo.org/status/403
+
+POWERSHELL:
+
+1. Invoke-WebRequest -Uri https://httpbingo.org/get -Verbose
+2. Invoke-WebRequest -Uri "https://httpbingo.org/post" -Method Post -ContentType "application/x-www-form-urlencoded" -Body "key=value" -Verbose
+3. Invoke-WebRequest -Uri https://httpbingo.org/status/404 -Method Head -Verbose
+4. Invoke-WebRequest -Uri https://httpbingo.org/status/403 -Method Head -Verbose
+
+KEY TAKEAWAYS ABOUT HTTP
+
+1. REQUEST/RESPONSE WORKFLOW:
+
+   - Client sends request (method, headers, optional body)
+   - Server processes and sends response (status code, headers, body)
+   - All communication follows HTTP protocol structure
+   - curl -v shows detailed TCP/TLS handshake and connection establishment
+   - PowerShell -Verbose shows simplified request/response flow
+
+2. METHODS HAVE DIFFERENT PURPOSES:
+
+   - GET: Retrieve data (no body, idempotent, cacheable)
+   - POST: Submit data (has body, non-idempotent, not cached by default)
+   - HEAD: Get headers only (efficient status checking, curl uses -I flag)
+
+3. HEADERS PROVIDE METADATA:
+
+   - Request headers: What client sends (User-Agent, Accept-Encoding, Content-Type)
+   - Response headers: What server sends (Date, Server, Content-Type, CORS)
+   - Content-Type and Content-Length are critical for body transmission
+   - Different tools send different User-Agent headers (curl/8.16.0 vs PowerShell/7.5.4)
+
+4. STATUS CODES COMMUNICATE OUTCOMES:
+
+   - 2xx: Success (200 OK)
+   - 4xx: Client errors (404 Not Found, 403 Forbidden)
+   - 5xx: Server errors (503 Service Unavailable)
+   - Status code alone tells you if request succeeded
+   - Both curl and PowerShell handle status codes identically
+
+5. DATA TRANSMISSION:
+
+   - GET: Data in URL query parameters (visible, limited size)
+   - POST: Data in request body (more secure, larger size)
+   - Form-encoded data uses Content-Type: application/x-www-form-urlencoded
+   - Both tools transmit POST data identically (Content-Length: 9 for "key=value")
+
+6. SECURITY & ACCESS CONTROL:
+
+   - 403 indicates authorization issue (exists but denied)
+   - 404 indicates resource doesn't exist
+   - HTTPS encrypts transmission (port 443)
+   - CORS headers control cross-origin access
+   - TLS/SSL handshake visible in curl -v output
+
+7. EFFICIENCY:
+
+   - HEAD method retrieves only headers (no body)
+   - Transfer-Encoding: chunked allows streaming (PowerShell)
+   - Content-Length provides exact size (curl)
+   - Accept-Encoding enables compression (gzip, deflate, br)
+
+8. CURL vs POWERSHELL COMPARISON:
+
+   - FUNCTIONALITY: Both produce identical HTTP requests and responses
+   - VERBOSITY: curl -v shows more network details (DNS, TCP, TLS)
+   - SYNTAX: curl has simpler syntax (-X, -d, -I flags)
+   - OUTPUT: PowerShell provides structured objects, curl shows raw text
+   - USER-AGENT: Different default User-Agent strings identify the tool used
+   - HEADERS: curl shows lowercase headers, PowerShell uses Title-Case
+
