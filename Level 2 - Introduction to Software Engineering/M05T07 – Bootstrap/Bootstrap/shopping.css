@@ -1,0 +1,247 @@
+/* SHOPPING STORE - CUSTOM STYLES */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Color Variables */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --dark-color: #212529;
+    --light-bg: #f8f9fa;
+}
+
+.container {
+    max-width: 1400px;
+}
+
+/* NAVIGATION STYLES */
+
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* HERO SECTION */
+
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* ADD BACKGROUND IMAGE (OPTIONAL): background-image: url('pictures/hero-bg.jpg'); */
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+}
+
+/* PRODUCTS SECTION */
+
+.products-section {
+    background-color: #fff;
+}
+
+.products-section h2 {
+    color: var(--dark-color);
+    font-weight: bold;
+}
+
+/* Product Card Styling */
+.product-card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image Wrapper */
+.product-img-wrapper {
+    overflow: visible;
+    position: relative;
+    height: 320px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+/* Product Image with Responsive Hover Effects */
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+/* Hover Effect: Scale/Zoom Image */
+.product-card:hover .product-img {
+    transform: scale(1.08);
+    opacity: 0.95;
+}
+
+/* Product Name */
+.product-name {
+    color: var(--dark-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Product Price */
+.product-price {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+/* Buy Button Styling */
+.buy-btn {
+    width: 100%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+}
+
+/* FOOTER STYLES */
+
+footer {
+    margin-top: auto;
+}
+
+footer h4 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+/* Footer Logo Styling */
+.footer-logo {
+    max-width: 100px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Footer Form Styling */
+footer .form-control {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+footer .form-control:focus {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+footer .btn-primary {
+    padding: 0.5rem 2rem;
+    font-weight: 600;
+}
+
+/* RESPONSIVE STYLES - MEDIA QUERIES */
+
+/* Tablets and below (992px) */
+@media (max-width: 992px) {
+    .product-img-wrapper {
+        height: 220px;
+    }
+    
+    .products-section h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Tablets and below (768px) */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 250px;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .product-img-wrapper {
+        height: 200px;
+    }
+    
+    .products-section {
+        padding: 3rem 0;
+    }
+    
+    footer .footer-logo {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Mobile devices (576px) */
+@media (max-width: 576px) {
+    .hero-section {
+        min-height: 200px;
+        padding: 2rem 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    
+    .product-img-wrapper {
+        height: 250px;
+    }
+    
+    .product-name {
+        font-size: 1rem;
+    }
+    
+    .product-price {
+        font-size: 1.1rem;
+    }
+    
+    .products-section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* UTILITY CLASSES */
+
+.mt-custom {
+    margin-top: 3rem;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
