@@ -1,0 +1,26 @@
+Models:
+- Represent domain data (Task objects).
+- Validate business rules (e.g., required title).
+- Provide serialization (to/from dict) for persistence.
+- Expose methods to query and manipulate tasks (TaskManager).
+
+Views:
+- Present data to the user (CLI, web page, or GUI).
+- Render lists, single task details, forms for create/update.
+- Handle basic input validation and formatting.
+
+Controllers:
+- Coordinate user actions and model updates.
+- Translate view input into model operations (create/read/update/delete).
+- Handle error cases and select the appropriate view response.
+- Orchestrate persistence via FileStorage.
+
+Storage (FileStorage component):
+- Abstract file I/O and data persistence (save/load JSON or CSV).
+- Encapsulate path management and atomic writes.
+- Return deserialized Task objects to the TaskManager.
+
+Testing & Extensibility notes:
+- Keep models free of view logic to allow multiple UI implementations.
+- Controllers should be thin and delegate business logic to models.
+- FileStorage can be swapped for a database-backed implementation with minimal controller changes.
