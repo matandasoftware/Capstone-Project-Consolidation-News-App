@@ -1,2 +1,41 @@
+TASK OVERVIEW REPORT
+==================================================
+Generated on: 2026-01-06 15:08:08
 
+Total tasks: 4
+Completed tasks: 1
+Incomplete tasks: 3
+Overdue tasks: 3
+Percentage of completed tasks: 25.0%
+Percentage of incomplete tasks: 75.0%
+Percentage of overdue tasks: 75.0%
 
+ALL TASKS:
+------------------------------
+Task 1:
+  Title: Complete website redesign
+  Assigned to: admin
+  Due date: 2025-09-15
+  Completed: n
+  Status: OVERDUE
+
+Task 2:
+  Title: Database backup
+  Assigned to: Pfarelo
+  Due date: 2025-09-12
+  Completed: y
+  Status: COMPLETED
+
+Task 3:
+  Title: Client presentation
+  Assigned to: admin
+  Due date: 2025-09-20
+  Completed: n
+  Status: OVERDUE
+
+Task 4:
+  Title: Review quarterly reports
+  Assigned to: Pfarelo
+  Due date: 2025-09-25
+  Completed: n
+  Status: OVERDUE
