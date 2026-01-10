@@ -1,0 +1,20 @@
+USER OVERVIEW REPORT
+==================================================
+
+Total number of users: 2
+Total number of tasks: 0
+
+User: admin
+  Total tasks assigned: 0
+  Percentage of total tasks: 0.00%
+  Percentage of completed tasks: 0.00%
+  Percentage of uncompleted tasks: 0.00%
+  Percentage of overdue tasks: 0.00%
+
+User: Pfarelo
+  Total tasks assigned: 0
+  Percentage of total tasks: 0.00%
+  Percentage of completed tasks: 0.00%
+  Percentage of uncompleted tasks: 0.00%
+  Percentage of overdue tasks: 0.00%
+
