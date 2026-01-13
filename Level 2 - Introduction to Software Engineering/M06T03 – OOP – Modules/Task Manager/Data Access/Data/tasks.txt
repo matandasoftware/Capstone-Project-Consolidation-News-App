@@ -1,4 +1,0 @@
-admin, Complete website redesign, Update the company website with new branding, 2025-09-01, 2025-09-15, n
-Pfarelo, Database backup, Perform weekly database backup and verification, 2025-09-05, 2025-09-12, y
-admin, Client presentation, Prepare presentation for new client meeting, 2025-09-08, 2025-09-20, n
-Pfarelo, Review quarterly reports, Analyze Q3 financial reports, 2025-09-10, 2025-09-25, n
