@@ -1,0 +1,76 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>{{ page_title }}</h2>
+        <a href="{% url 'product:vendor_product_create' %}" class="btn btn-success">+ Add New Product</a>
+    </div>
+</div>
+
+<!-- Products Table -->
+<div class="row">
+    <div class="col-md-12">
+        {% if products %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Store</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                            <div class="bg-secondary text-white text-center" style="width: 50px; height: 50px; line-height: 50px;">N/A</div>
+                            {% endif %}
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>
+                            <a href="{% url 'product:store_detail' product.store.pk %}">{{ product.store.name }}</a>
+                        </td>
+                        <td>{{ product.category.name|default:"No category" }}</td>
+                        <td>R{{ product.price }}</td>
+                        <td>
+                            {% with stock_info=product.get_stock_display %}
+                                <span class="badge {{ stock_info.class }}">{{ stock_info.text }}</span>
+                            {% endwith %}
+                        </td>
+                        <td>
+                            {% if product.is_active %}
+                            <span class="badge bg-success">Active</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'product:vendor_product_update' product.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{% url 'product:vendor_product_delete' product.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <h4>No products yet!</h4>
+            <p>Start adding products to your stores.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

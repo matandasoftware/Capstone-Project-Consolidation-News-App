@@ -1,0 +1,35 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">⚠️ Confirm Delete</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Are you sure you want to delete this store?</p>
+
+                <div class="alert alert-warning">
+                    <strong>Store:</strong> {{ store.name }}<br>
+                    <strong>Products:</strong> {{ store.products.count }}<br>
+                    <strong>Status:</strong> {% if store.is_active %}Active{% else %}Inactive{% endif %}
+                </div>
+
+                <div class="alert alert-danger">
+                    <strong>⚠️ WARNING:</strong> This action cannot be undone!<br>
+                    All products in this store will also be deleted.
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes, Delete Store</button>
+                    <a href="{% url 'product:store_detail' store.pk %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

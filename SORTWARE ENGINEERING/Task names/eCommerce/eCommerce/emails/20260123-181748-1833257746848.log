@@ -1,0 +1,84 @@
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Subject: Order Confirmation #3 - eCommerce Store
+From: noreply@ecommerce.com
+To: pfarelochannel@outlook.com
+Date: Fri, 23 Jan 2026 16:17:48 +0000
+Message-ID: <176918506841.13532.3047529784350408242@PEASEEMUDAU>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333;=
+ }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #0d6efd; color: white; padding: 20px; tex=
+t-align: center; }
+        .content { padding: 20px; background-color: #f8f9fa; }
+        .order-info { background-color: white; padding: 15px; margin: 20px 0;=
+ border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #d=
+dd; }
+        th { background-color: #e9ecef; }
+        .total { font-size: 1.2em; font-weight: bold; text-align: right; padd=
+ing: 15px; }
+        .footer { text-align: center; padding: 20px; color: #6c757d; font-siz=
+e: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class=3D"container">
+        <div class=3D"header">
+            <h1>Order Confirmation</h1>
+            <p>Thank you for your purchase!</p>
+        </div>
+       =20
+        <div class=3D"content">
+            <div class=3D"order-info">
+                <h2>Order Details</h2>
+                <p><strong>Order Number:</strong> #3</p>
+                <p><strong>Order Date:</strong> January 23, 2026 16:17</p>
+                <p><strong>Customer:</strong> matanda</p>
+                <p><strong>Email:</strong> pfarelochannel@outlook.com</p>
+                <p><strong>Status:</strong> Pending</p>
+            </div>
+           =20
+            <h2>Items Ordered</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   =20
+                    <tr>
+                        <td>Kenwood Premium Steam Iron</td>
+                        <td>2</td>
+                        <td>R999.99</td>
+                        <td>R1999.98</td>
+                    </tr>
+                   =20
+                </tbody>
+            </table>
+           =20
+            <div class=3D"total">
+                <p>Total Amount: R1999.98</p>
+            </div>
+        </div>
+       =20
+        <div class=3D"footer">
+            <p>This is an automated email. Please do not reply.</p>
+            <p>&copy; 2026 eCommerce Store. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+-------------------------------------------------------------------------------
