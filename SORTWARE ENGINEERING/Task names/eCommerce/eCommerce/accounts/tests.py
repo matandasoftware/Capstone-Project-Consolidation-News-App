@@ -1,3 +1,6 @@
 from django.test import TestCase
 
-# Create your tests here.
+# All authentication tests moved to eCommerce/tests/test_authentication.py
+# Run tests with: python manage.py test tests.test_authentication
+
+

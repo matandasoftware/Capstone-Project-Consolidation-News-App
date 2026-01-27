@@ -1,0 +1,19 @@
+{
+  "name": "buroko-kitchen",
+  "version": "1.0.0",
+  "description": "Full-stack food ordering application for Buroko's Kitchen",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm start",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-deps": "cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": ["food-ordering", "restaurant", "react", "nodejs", "express"],
+  "author": "Buroko's Kitchen",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

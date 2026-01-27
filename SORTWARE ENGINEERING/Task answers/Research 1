@@ -1,0 +1,176 @@
+
+
+1. Layered architecture
+
+Real world examples
+
+The most well-known example is the three-tier architecture, which divides an application into three separate layers: 
+the data layer, the business layer, and the presentation layer.  Each layer is in charge of a distinct set of duties.
+An e-commerce website is an excellent illustration of the three-tier architecture.
+Web pages and APIs that let users examine product details and make purchases make up the presentation layer.  
+While the data layer stores and retrieves data from the database, the business layer manages business logic, including order totals and price calculations.
+
+when would it be most appropriate to use layered architecture?
+
+A three-tier strategy is used by enterprise software solutions, such as cloud-based apps, customer relationship management (CRM), and enterprise resource planning (ERP).
+Web apps: This architecture is used by the majority of contemporary web and mobile applications.
+
+Budget or Time Restrictions: Layered architecture is well recognised and easy to implement.
+It is appropriate for projects with tight budgets and deadlines because it does not include the complexity of distributed systems.
+
+Isolated Changes: This architecture is perfect if the majority of changes are limited to particular layers (such as UI redesigns or database migrations) 
+since it reduces the influence of changes on other layers.
+
+Alignment of Team Structure:
+works effectively with technical expertise-based teams, such as database, front-end, and back-end teams.  
+Conway's Law, which describes this alignment, guarantees effective cooperation.
+
+General-Purpose Applications: When it's unclear which architecture is ideal for the application, this is a good place to start.
+It offers a flexible, comprehensible framework.
+
+Why would it be more appropriate to use layered architecture of a theree-tier architecture in iterprise software solutions?
+
+This division of responsibilities encourages modularity and makes development, maintenance, and scaling easier.
+
+2. Repository architecture
+
+Real world examples
+
+Using the Repository Pattern in Enterprise Architecture
+
+Situation:
+Assume we are creating an API for an enterprise's product management.  We will be able to abstract database interactions using the Repository Pattern,
+which will facilitate future scalability and maintenance of the application.
+
+Here, we'll use SQLAlchemy and FastAPI to create a simple CRUD application for managing products in the database.
+
+The following pattern is incorporated into the data persistence layer of an enterprise architecture, which can be a component of a hexagonal architecture
+(sometimes called "ports and adapters") or a layered architecture.
+
+[ API / Business Logic ] → [ Repository (Data Access Interface) ] → [ Database ]
+
+
+The Code
+
+2.1. Model of Data
+First, we use SQLAlchemy to create the product model that will represent our database table.
+
+
+from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class Product(Base):
+    __tablename__ = 'products'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    price = Column(Float)
+
+Justification:
+
+Product: Indicates a product in the database, each of which contains a name, price, and ID.
+Base: We use declarative_base() to build the foundation for our data models.
+
+2.2. Repository
+
+Building the repository that would oversee CRUD activities for the goods is the next stage. By serving as an abstraction layer,
+this repository keeps the business logic separate from the database queries.
+
+from sqlalchemy.orm import Session
+from models import Product
+
+class ProductRepository:
+    def __init__(self, db: Session):
+        self.db = db
+
+    def create(self, name: str, price: float) -> Product:
+        product = Product(name=name, price=price)
+        self.db.add(product)
+        self.db.commit()
+        self.db.refresh(product)
+        return product
+
+    def get_by_id(self, product_id: int) -> Product:
+        return self.db.query(Product).filter(Product.id == product_id).first()
+
+    def update(self, product_id: int, name: str, price: float) -> Product:
+        product = self.get_by_id(product_id)
+        if product:
+            product.name = name
+            product.price = price
+            self.db.commit()
+            self.db.refresh(product)
+        return product
+
+    def delete(self, product_id: int) -> None:
+        product = self.get_by_id(product_id)
+        if product:
+            self.db.delete(product)
+            self.db.commit()
+			
+Explanation:
+CRUD Methods:
+
+create: Creates a new product in the database.
+get_by_id: Retrieves a product by its ID.
+update: Updates an existing product.
+delete: Deletes a product from the database.
+This repository layer becomes a reusable service that can be easily adapted for different needs in the application.
+
+2.3. API - Integration with FastAPI
+Finally, we integrate this repository into an API built with FastAPI so we can interact with products via HTTP requests.
+
+from fastapi import FastAPI, Depends
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from repositories.product_repository import ProductRepository
+from models import Product, Base
+
+DATABASE_URL = "sqlite:///./test.db"
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.post("/products/")
+def create_product(name: str, price: float, db: Session = Depends(get_db)):
+    repo = ProductRepository(db)
+    return repo.create(name, price)
+
+@app.get("/products/{product_id}")
+def get_product(product_id: int, db: Session = Depends(get_db)):
+    repo = ProductRepository(db)
+    return repo.get_by_id(product_id)
+
+@app.put("/products/{product_id}")
+def update_product(product_id: int, name: str, price: float, db: Session = Depends(get_db)):
+    repo = ProductRepository(db)
+    return repo.update(product_id, name, price)
+
+@app.delete("/products/{product_id}")
+def delete_product(product_id: int, db: Session = Depends(get_db)):
+    repo = ProductRepository(db)
+    repo.delete(product_id)
+    return {"message": "Product deleted successfully"}
+	
+Explanation:
+
+We use FastAPI to create API routes that manage products.
+Each route calls the appropriate method from the repository to perform the corresponding operation.
+
+
+Why would it be more appropriate to use repository architecture  in Enterprise Architecture?
+
+The Repository Pattern is essential for any enterprise application that seeks a clean, scalable, and maintainable architecture.
+Its ability to decouple data access from business logic improves flexibility and ease of maintenance for large systems.
+Implementing this pattern not only enhances the structure of the application but also enables more effective testing and reduces long-term complexity.
+

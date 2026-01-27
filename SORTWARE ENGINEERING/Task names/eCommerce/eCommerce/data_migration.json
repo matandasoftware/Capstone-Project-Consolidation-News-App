@@ -1,0 +1,522 @@
+[
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Vendors",
+    "permissions": [
+      [
+        "add_category",
+        "product",
+        "category"
+      ],
+      [
+        "change_category",
+        "product",
+        "category"
+      ],
+      [
+        "delete_category",
+        "product",
+        "category"
+      ],
+      [
+        "view_category",
+        "product",
+        "category"
+      ],
+      [
+        "add_product",
+        "product",
+        "product"
+      ],
+      [
+        "change_product",
+        "product",
+        "product"
+      ],
+      [
+        "delete_product",
+        "product",
+        "product"
+      ],
+      [
+        "view_product",
+        "product",
+        "product"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Buyers",
+    "permissions": [
+      [
+        "view_category",
+        "product",
+        "category"
+      ],
+      [
+        "view_product",
+        "product",
+        "product"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$G9QqaYV5rnEZBoZpV59iwn$65xSsyVw7ZR4rWRLJbJjWxL35VcVZ7+o3vHDDX4r8EM=",
+    "last_login": "2026-01-23T03:58:12.682Z",
+    "is_superuser": true,
+    "username": "mudau",
+    "first_name": "",
+    "last_name": "",
+    "email": "pfarelochannel@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-22T15:08:26.962Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$HalJhrjgtxhbxRO32dH2h7$ZxIxqT0bMbYvp+6rycJbI098pF06GLndwBujt+YPpMU=",
+    "last_login": "2026-01-23T16:12:44.737Z",
+    "is_superuser": false,
+    "username": "channel",
+    "first_name": "",
+    "last_name": "",
+    "email": "pfarelochannel@gmail1.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-22T18:59:38.420Z",
+    "groups": [
+      [
+        "Vendors"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Sdiv3k26ZDrFeGKPNBS20N$bIBgw84gfGi7/aiWR3XpOzFL6kixmVxqP8/JwbU4qxU=",
+    "last_login": "2026-01-23T15:48:54.966Z",
+    "is_superuser": true,
+    "username": "earthtiger",
+    "first_name": "",
+    "last_name": "",
+    "email": "virgoearthtiger@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-23T04:02:06.822Z",
+    "groups": [
+      [
+        "Vendors"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$nRAVsdv3gHrPqufTYuKvHI$wO1EoCnMEUdrkvigtrAamvEaZyxGXcE4SwDKWdmN11w=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "pfare",
+    "first_name": "",
+    "last_name": "",
+    "email": "pfarelochannel@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-23T06:14:57.438Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Zaxl4U7gfjApTzU8xvVdp5$exijI51Ado9VA2LaZw5ADpdtqeQhzzvlpP5eXcBC/Tg=",
+    "last_login": "2026-01-23T16:13:05.058Z",
+    "is_superuser": false,
+    "username": "matanda",
+    "first_name": "",
+    "last_name": "",
+    "email": "pfarelochannel@outlook.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-23T09:07:37.244Z",
+    "groups": [
+      [
+        "Buyers"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "9e8lf32solgvmcnj6pqqdt03mu2owfot",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQBf9lzw2hFSj06N1vIAssFjXFQJtomv67NulBr2_mzQoWl3m0S6ViU4ABJDS_m0N_p2kH4YbTNTOfp7kkx3aFHbSySw70OB_uX2DEOn7fKgbRGYlcCyddJwU_SamMDErJiN4J5U9Ce4GRBPXEW4NGaaMVRud66vdopVpTniy9nqm8YVCcN-CxzDCs0MLQbdsHyWRDkw:1vjDJo:pRIVLFiAzbu0ic8eRUpJjLJuEqz9tdHAAmvJ2eX3XqY",
+    "expire_date": "2026-01-23T09:29:04.876Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "aq97ongs8ajn34vr62pz8vaqzmav95q0",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGln-YXBKes5g7a43xIDsKE4kEOLuECkFtG_mzUtEWOYhLo2nmJPohBW73w2BblxWkK5QLlVSLfOUUa6K3GiT55r4ftrcv8AAbfi-VSLwyhhtvXYW2BBh79jpY1CBDggWg-0hgWMyYNAlvzeekRCtdiqs0cat5VoiP8Y8PUXnlXp_ACDZQAs:1vj9ly:cIQsfnXSgT8b895WK-al93VBQhhHfSrWDpCgKCGbS-g",
+    "expire_date": "2026-01-23T05:41:54.663Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "avsmv0drb764u8ljy0vo23o5lmo0u2a5",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSHlzbh07zeQAQapGkhKuzL-uzbpQrf3nHNfLOC21rANWsKc2ZkJdvrdIqYHtR3kO7Zb56m3dZkj3xV-0MGvPdPzcrh_BxVH_dbgrC1WehMRvZQavCZLkCAK55QFX4rRIIzwxZEFiJPyRoJUU9akTGHvD7eeNpE:1vj7Gr:TgdyjlER2SlMHNqIU357AHKUPnAktvVVgR1SzyQf4VY",
+    "expire_date": "2026-01-23T03:01:37.091Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "c16ya82b3b9cu152m44d738ffn7s0yav",
+  "fields": {
+    "session_data": "eyJjYXJ0Ijp7fX0:1vjJPy:KxntHlN_XyfaA4FaV8-FOljfz7wzMI1LAJePjZzEpok",
+    "expire_date": "2026-01-23T15:59:50.926Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "njz96zee7byf3l0rk0zkgfq7dhq6gmo3",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAUBe_iGlneMJiSPmew_hYcQLYUJxXi7hApBbRvZt5LZViXktcuc55YXZRXh98NgR5SN8B3qLemqdVlnlBvit5p10NjeV539--gQC_f2jBBNM5ZH23wII4IxyDBnpNJdELwmPwIDEHIgcPA8eiiICF6G0xS7w_u_Dho:1vj8Yw:8jsldHOiLYSyLTXhGeVzw3zTk41hveAbgz9oWM3j814",
+    "expire_date": "2026-01-23T04:24:22.495Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "orz2naf01r8b9iz25r39xonhh715sveu",
+  "fields": {
+    "session_data": ".eJxVjMEOgyAQBf9lzw1BBRSOvfcbyAJrpW2gAU3aGP-9NfHi9c28WcFjmcGs0IBptwtYXObJLpWKjQEMSDhtDv2T0g7CA9M9M5_TXKJju8IOWtktB3pdD_cUmLBO_7cag2i1RD4IJ10rBe-kVFoGpeSI3gnlOzF4gSMJ6ok3GrUa9KBwdK6nfo9WqjXmZOnzjuULRnG-_QBALUOT:1vjDUF:q3YhctcZBnAMtx1cc8aXmPGt5vDR1bha3QCcL14t4_Q",
+    "expire_date": "2026-01-23T09:39:51.295Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qa5elldgt9f5hkxh0kocz6yfrx7qfep8",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAUBe_iGlneMJiSPmew_hYcQLYUJxXi7hApBbRvZt5LZViXktcuc55YXZRXh98NgR5SN8B3qLemqdVlnlBvit5p10NjeV539--gQC_f2jBBNM5ZH23wII4IxyDBnpNJdELwmPwIDEHIgcPA8eiiICF6G0xS7w_u_Dho:1vjAYJ:N71RjOSKuBsV0u2JXVv0i5BThvugfC3iIWQGVyMsKYc",
+    "expire_date": "2026-01-23T06:31:51.320Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "suhekwowurk3jrm5ogc0voi6ppr1exk2",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQBf-FsyFYWQo9evcbyAKLRQ0YaBNN03_XJr30-mbeLMxjndiwrCdmcZ5GOzeqNgU2MGCHzaF_Ut5AeGC-F-5LnmpyfFP4Thu_lUCv6-4eAiO28f9WMcjOAAotHbgOpLgAKANBKYjonVT-IrWXGElST-Js0ChttMLoXE_9Fm3UWirZ0ued6pcNSoj1B4OHQrI:1vjJr2:MX_NmwbHIfHnsM5pFBynMrYwbvcxd-Ny5wT3gV75FZk",
+    "expire_date": "2026-01-23T16:27:48.569Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "y5qgu4wy5g22pui6jta0f3egayelppty",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSHlzbh07zeQAQapGkhKuzL-uzbpQrf3nHNfLOC21rANWsKc2ZkJdvrdIqYHtR3kO7Zb56m3dZkj3xV-0MGvPdPzcrh_BxVH_dbgrC1WehMRvZQavCZLkCAK55QFX4rRIIzwxZEFiJPyRoJUU9akTGHvD7eeNpE:1vj7hO:ctfgTci7BGyEi5EdMnLfFU9MB4YqUhQT97y0WWrD1nM",
+    "expire_date": "2026-01-23T03:29:02.984Z"
+  }
+},
+{
+  "model": "product.store",
+  "pk": 3,
+  "fields": {
+    "vendor": [
+      "earthtiger"
+    ],
+    "name": "electric hub",
+    "description": "anything electric",
+    "is_active": true,
+    "created_at": "2026-01-23T05:18:07.060Z",
+    "updated_at": "2026-01-23T15:39:12.680Z"
+  }
+},
+{
+  "model": "product.category",
+  "pk": 1,
+  "fields": {
+    "name": "Electronics",
+    "description": "Electronic devices and gadgets",
+    "created_at": "2026-01-23T05:42:43.310Z"
+  }
+},
+{
+  "model": "product.category",
+  "pk": 2,
+  "fields": {
+    "name": "Clothing",
+    "description": "Fashion and apparel",
+    "created_at": "2026-01-23T05:42:43.323Z"
+  }
+},
+{
+  "model": "product.category",
+  "pk": 3,
+  "fields": {
+    "name": "Books",
+    "description": "Books and reading materials",
+    "created_at": "2026-01-23T05:42:43.330Z"
+  }
+},
+{
+  "model": "product.category",
+  "pk": 4,
+  "fields": {
+    "name": "Home & Garden",
+    "description": "Home improvement and gardening",
+    "created_at": "2026-01-23T05:42:43.334Z"
+  }
+},
+{
+  "model": "product.category",
+  "pk": 5,
+  "fields": {
+    "name": "Sports & Outdoors",
+    "description": "Sports equipment and outdoor gear",
+    "created_at": "2026-01-23T05:42:43.339Z"
+  }
+},
+{
+  "model": "product.category",
+  "pk": 6,
+  "fields": {
+    "name": "Toys & Games",
+    "description": "Toys and entertainment",
+    "created_at": "2026-01-23T05:42:43.346Z"
+  }
+},
+{
+  "model": "product.product",
+  "pk": 1,
+  "fields": {
+    "name": "Lg 18kg Top Load Full Automatic Washing Machine",
+    "store": 3,
+    "description": "Lg 18 Kg Top Load Full Automatic Washing Machine With Inverter Direct Drive Motor, Black Silver - T1872Efhstl\"Min 1 year manufacturer warranty\"",
+    "price": "6499.99",
+    "stock": 6,
+    "category": 1,
+    "image": "products/Lg_18_Kg_Top_Load_Full_Automatic_Washing_Machine.jpg",
+    "created_at": "2026-01-23T05:46:59.281Z",
+    "updated_at": "2026-01-23T15:43:28.243Z",
+    "is_active": true
+  }
+},
+{
+  "model": "product.product",
+  "pk": 2,
+  "fields": {
+    "name": "Kenwood Premium Steam Iron",
+    "store": 3,
+    "description": "Kenwood Premium Steam Iron, 3100W",
+    "price": "999.99",
+    "stock": 8,
+    "category": 1,
+    "image": "products/electric_iron.webp",
+    "created_at": "2026-01-23T15:38:45.257Z",
+    "updated_at": "2026-01-23T16:17:48.337Z",
+    "is_active": true
+  }
+},
+{
+  "model": "product.order",
+  "pk": 1,
+  "fields": {
+    "buyer": [
+      "matanda"
+    ],
+    "total_amount": "6499.99",
+    "status": "pending",
+    "order_date": "2026-01-23T15:43:28.218Z"
+  }
+},
+{
+  "model": "product.order",
+  "pk": 2,
+  "fields": {
+    "buyer": [
+      "matanda"
+    ],
+    "total_amount": "1999.98",
+    "status": "pending",
+    "order_date": "2026-01-23T16:13:45.153Z"
+  }
+},
+{
+  "model": "product.order",
+  "pk": 3,
+  "fields": {
+    "buyer": [
+      "matanda"
+    ],
+    "total_amount": "1999.98",
+    "status": "pending",
+    "order_date": "2026-01-23T16:17:48.309Z"
+  }
+},
+{
+  "model": "product.orderitem",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "product": 1,
+    "quantity": 1,
+    "price": "6499.99"
+  }
+},
+{
+  "model": "product.orderitem",
+  "pk": 2,
+  "fields": {
+    "order": 2,
+    "product": 2,
+    "quantity": 2,
+    "price": "999.99"
+  }
+},
+{
+  "model": "product.orderitem",
+  "pk": 3,
+  "fields": {
+    "order": 3,
+    "product": 2,
+    "quantity": 2,
+    "price": "999.99"
+  }
+},
+{
+  "model": "product.review",
+  "pk": 2,
+  "fields": {
+    "product": 1,
+    "user": [
+      "matanda"
+    ],
+    "rating": 4,
+    "comment": "awesome product",
+    "verified": true,
+    "created_at": "2026-01-23T15:27:06.293Z"
+  }
+},
+{
+  "model": "product.review",
+  "pk": 3,
+  "fields": {
+    "product": 2,
+    "user": [
+      "matanda"
+    ],
+    "rating": 5,
+    "comment": "the product looks durable, i can't wait to buy it",
+    "verified": false,
+    "created_at": "2026-01-23T15:48:37.816Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "c5a332159be3ffc316128d74d89a0c193b303064",
+    "expiry_date": "2026-01-22T21:10:24.353Z",
+    "used": false,
+    "created_at": "2026-01-22T19:05:24.618Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "d37ff17c5e5762ce6f463a57a93cd3fa46c23527",
+    "expiry_date": "2026-01-22T21:12:35.456Z",
+    "used": false,
+    "created_at": "2026-01-22T19:07:35.460Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "f7578236762972056bf82272a908eb57ef110de5",
+    "expiry_date": "2026-01-22T21:14:52.557Z",
+    "used": false,
+    "created_at": "2026-01-22T19:09:52.561Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "b4813eb221b37b12f00bced9cd9190843c365a68",
+    "expiry_date": "2026-01-22T21:31:02.726Z",
+    "used": false,
+    "created_at": "2026-01-22T19:26:02.734Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "fcddf0bfea0a7b3a6818f9862b75471ebc86500e",
+    "expiry_date": "2026-01-22T21:40:29.821Z",
+    "used": false,
+    "created_at": "2026-01-22T19:35:29.874Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "221967529da24970cb1772d67b18ef8304872e96",
+    "expiry_date": "2026-01-22T21:41:38.170Z",
+    "used": false,
+    "created_at": "2026-01-22T19:36:38.170Z"
+  }
+},
+{
+  "model": "accounts.resettoken",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "mudau"
+    ],
+    "token": "0d0157e887ad7ffe3b51d1586e1d20451a1431f0",
+    "expiry_date": "2026-01-22T21:43:04.918Z",
+    "used": false,
+    "created_at": "2026-01-22T19:38:04.918Z"
+  }
+}
+]

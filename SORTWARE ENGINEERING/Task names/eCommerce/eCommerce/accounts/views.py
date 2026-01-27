@@ -71,16 +71,18 @@ def register_user(request):
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
             account_type = form.cleaned_data['account_type']
-            
+
             if verify_username(username) and verify_password(password):
                 user = User.objects.create_user(username=username, password=password)
                 user.email = email
-                
+
                 # Add user to group (Vendors or Buyers)
-                user_group, created = Group.objects.get_or_create(name=account_type)
+                # Capitalize and pluralize to match group names: Vendors, Buyers
+                group_name = account_type.capitalize() + 's'
+                user_group, created = Group.objects.get_or_create(name=group_name)
                 user.groups.add(user_group)
                 user.save()
-                
+
                 login(request, user)
                 messages.success(request, f'Welcome {username}! Your {account_type} account has been created.')
                 return redirect('accounts:welcome')
@@ -90,7 +92,7 @@ def register_user(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         form = RegisterForm()
-    
+
     return render(request, 'accounts/register.html', {'form': form})
 
 
@@ -198,12 +200,15 @@ def reset_password(request):
             token = request.session.get('reset_token')
             password = form.cleaned_data['password']
             password_conf = form.cleaned_data['password_conf']
-            
+
             if password == password_conf:
-                change_user_password(username, password)
+                # Get user and change password properly
+                user = User.objects.get(username=username)
+                user.set_password(password)
+                user.save()
                 # Mark token as used and delete
                 hashed_token = sha1(token.encode()).hexdigest()
-                ResetToken.objects.filter(token=hashed_token).delete()
+                ResetToken.objects.filter(token=hashed_token).update(used=True)
                 # Clear session
                 del request.session['reset_user']
                 del request.session['reset_token']

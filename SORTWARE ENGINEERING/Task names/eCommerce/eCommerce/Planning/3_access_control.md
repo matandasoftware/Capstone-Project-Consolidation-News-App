@@ -206,19 +206,19 @@ token = hashlib.sha1(f"{username}{timestamp}".encode()).hexdigest()
 
 ---
 
-## Security Best Practices Implemented
+## Security Best Practices Planned
 
-✅ Passwords hashed, never stored plaintext
-✅ CSRF protection on all forms
-✅ XSS prevention (auto-escaping)
-✅ SQL injection prevention (ORM)
-✅ Session timeouts
-✅ Ownership validation
-✅ Group-based permissions
-✅ HTTP-only cookies
-✅ File upload validation
-✅ Token expiration (password reset)
-✅ Login required decorators
+- Passwords hashed, never stored plaintext
+- CSRF protection on all forms
+- XSS prevention (auto-escaping)
+- SQL injection prevention (ORM)
+- Session timeouts
+- Ownership validation
+- Group-based permissions
+- HTTP-only cookies
+- File upload validation
+- Token expiration (password reset)
+- Login required decorators
 
 ---
 

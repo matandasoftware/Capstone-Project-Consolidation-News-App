@@ -254,13 +254,13 @@ Category
 
 ## Migration from SQLite to MariaDB
 
-**Process Completed:**
-1. ✓ Installed MariaDB 10.6
-2. ✓ Created database `ecommerce_db`
-3. ✓ Created user `ecommerce_user` with password
-4. ✓ Updated Django settings.py
-5. ✓ Ran `python manage.py migrate`
-6. ✓ Created superuser
+**Process Steps:**
+1. Install MariaDB 10.6
+2. Create database `ecommerce_db`
+3. Create user `ecommerce_user` with password
+4. Update Django settings.py
+5. Run `python manage.py migrate`
+6. Create superuser
 
 **Result:** Fresh MariaDB database with all tables created
 
@@ -664,13 +664,13 @@ product_order (Orders)
 ## Data Migration Plan
 
 ### From SQLite to MariaDB
-**Completed Steps:**
-1. ✓ Install MariaDB 10.6
-2. ✓ Create database `ecommerce_db`
-3. ✓ Create user `ecommerce_user`
-4. ✓ Update Django settings
-5. ✓ Run migrations
-6. ✓ Create superuser
+**Migration Steps:**
+1. Install MariaDB 10.6
+2. Create database `ecommerce_db`
+3. Create user `ecommerce_user`
+4. Update Django settings
+5. Run migrations
+6. Create superuser
 
 **Fresh Database:**
 - MariaDB database starts empty

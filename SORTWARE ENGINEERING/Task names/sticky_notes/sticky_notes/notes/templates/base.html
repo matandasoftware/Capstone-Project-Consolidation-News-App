@@ -1,0 +1,37 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sticky Notes{% endblock %}</title>
+    {% block styles %}
+    <link rel="stylesheet" href="{% static 'notes/styles.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <h1>Sticky Notes</h1>
+        <nav>
+            <a href="{% url 'note_list' %}">Home</a>
+        </nav>
+    </header>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div>{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>Sticky Notes App</p>
+    </footer>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

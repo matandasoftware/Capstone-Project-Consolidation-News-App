@@ -1,0 +1,23 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="burgerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd54f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="200" fill="url(#burgerBg)"/>
+  <!-- Burger bun -->
+  <ellipse cx="150" cy="80" rx="60" ry="25" fill="#d2691e"/>
+  <!-- Lettuce -->
+  <path d="M 90 90 Q 150 85 210 90 Q 200 95 150 92 Q 100 95 90 90" fill="#228b22"/>
+  <!-- Meat patty -->
+  <ellipse cx="150" cy="100" rx="55" ry="15" fill="#8b4513"/>
+  <!-- Bottom bun -->
+  <ellipse cx="150" cy="120" rx="60" ry="20" fill="#daa520"/>
+  <!-- Chips -->
+  <rect x="50" y="140" width="8" height="30" fill="#ffd700" transform="rotate(15 54 155)"/>
+  <rect x="65" y="145" width="8" height="25" fill="#ffd700" transform="rotate(-10 69 157)"/>
+  <rect x="230" y="140" width="8" height="28" fill="#ffd700" transform="rotate(20 234 154)"/>
+  <rect x="245" y="142" width="8" height="32" fill="#ffd700" transform="rotate(-15 249 158)"/>
+  <text x="150" y="190" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#8b4513">Siphos</text>
+</svg>

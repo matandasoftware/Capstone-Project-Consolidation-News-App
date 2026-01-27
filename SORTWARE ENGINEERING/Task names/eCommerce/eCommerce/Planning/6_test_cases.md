@@ -135,32 +135,32 @@ Each test file contains:
 
 ## Core Requirements Tested
 
-✅ **Requirement 1:** Users register as vendors/buyers
-- Covered in TEST_01 (authentication)
+**Requirement 1:** Users register as vendors/buyers
+- Covered in authentication tests
 
-✅ **Requirement 2:** Vendors manage stores and products
-- Covered in TEST_02 (stores) and TEST_03 (products)
+**Requirement 2:** Vendors manage stores and products
+- Covered in store management and product management tests
 
-✅ **Requirement 3:** Buyers shop and checkout
-- Covered in TEST_04 (cart & checkout)
+**Requirement 3:** Buyers shop and checkout
+- Covered in cart & checkout tests
 
-✅ **Requirement 4:** Session-based cart
-- Covered in TEST_04 (cart persistence tests)
+**Requirement 4:** Session-based cart
+- Covered in cart persistence tests
 
-✅ **Requirement 5:** Email invoice after checkout
-- Covered in TEST_06 (email system tests)
+**Requirement 5:** Email invoice after checkout
+- Covered in email system tests
 
-✅ **Requirement 6:** Verified/unverified reviews
-- Covered in TEST_05 (review system)
+**Requirement 6:** Verified/unverified reviews
+- Covered in review system tests
 
-✅ **Requirement 7:** Password reset with expiring tokens
-- Covered in TEST_01 (password reset tests)
+**Requirement 7:** Password reset with expiring tokens
+- Covered in password reset tests
 
-✅ **Requirement 8:** MariaDB database
-- Covered in TEST_06 (database security tests)
+**Requirement 8:** MariaDB database
+- Covered in database security tests
 
-✅ **Requirement 9:** Authentication and permissions
-- Covered in ALL test files (permissions tested per feature)
+**Requirement 9:** Authentication and permissions
+- Covered in all test files (permissions tested per feature)
 
 ---
 
@@ -492,22 +492,22 @@ Manual testing performed to verify all features work as expected.
 ## Acceptance Criteria
 
 ### Feature Checklist
-- ✅ Users can register as Vendor or Buyer
-- ✅ Vendors can create/edit/delete stores
-- ✅ Vendors can add/edit/delete products
-- ✅ Buyers can add products to cart
-- ✅ Cart persists in session
-- ✅ Cart preserved after logout
-- ✅ Checkout creates order
-- ✅ Invoice emailed to buyer
-- ✅ Stock reduced after purchase
-- ✅ Reviews can be left
-- ✅ Reviews marked verified if purchased
-- ✅ Password reset works
-- ✅ Tokens expire after 5 minutes
-- ✅ MariaDB database used
-- ✅ Permissions enforced (vendor/buyer separation)
-- ✅ Ownership validation works
+- Users can register as Vendor or Buyer
+- Vendors can create/edit/delete stores
+- Vendors can add/edit/delete products
+- Buyers can add products to cart
+- Cart persists in session
+- Cart preserved after logout
+- Checkout creates order
+- Invoice emailed to buyer
+- Stock reduced after purchase
+- Reviews can be left
+- Reviews marked verified if purchased
+- Password reset works
+- Tokens expire after 5 minutes
+- MariaDB database used
+- Permissions enforced (vendor/buyer separation)
+- Ownership validation works
 
 ---
 
@@ -534,7 +534,7 @@ Manual testing performed to verify all features work as expected.
 **Testing Method:** Manual
 **Pass Criteria:** All core requirements functional
 
-**Result:** ✅ All tests passed
+**Result:** All tests should pass
 
 ## Test Strategy
 

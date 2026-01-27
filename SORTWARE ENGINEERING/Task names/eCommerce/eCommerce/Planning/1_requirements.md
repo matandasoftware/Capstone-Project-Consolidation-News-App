@@ -142,17 +142,17 @@ eCommerce web application built with Django that allows users to register as Ven
 
 ---
 
-## Requirements Met
+## Requirements Summary
 
-✅ Users register as Vendor or Buyer
-✅ Vendors create/manage stores and products
-✅ Buyers view products, add to cart, checkout
-✅ Session-based cart tracking
-✅ Invoice emailed after checkout
-✅ Verified/unverified review system
-✅ Password reset with expiring tokens
-✅ MariaDB database
-✅ Authentication and permissions enforced
+- Users register as Vendor or Buyer
+- Vendors create/manage stores and products
+- Buyers view products, add to cart, checkout
+- Session-based cart tracking
+- Invoice emailed after checkout
+- Verified/unverified review system
+- Password reset with expiring tokens
+- MariaDB database
+- Authentication and permissions enforced
 
 ---
 

@@ -3,13 +3,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
+ACCOUNT_TYPES = [
+    ('vendor', 'Vendor - Sell Products'),
+    ('buyer', 'Buyer - Purchase Products'),
+]
+
+
 class RegisterForm(UserCreationForm):
     """User registration form with email and account type."""
     email = forms.EmailField(required=True)
-    ACCOUNT_TYPES = [
-        ('Vendors', 'Vendor - Sell Products'),
-        ('Buyers', 'Buyer - Purchase Products'),
-    ]
     account_type = forms.ChoiceField(choices=ACCOUNT_TYPES, required=True, label="Account Type")
     
     class Meta:
