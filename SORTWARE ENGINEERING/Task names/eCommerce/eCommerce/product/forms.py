@@ -79,6 +79,24 @@ class ProductForm(forms.ModelForm):
         # Ensure stock field accepts 0
         self.fields['stock'].required = True
         self.fields['stock'].min_value = 0
+        
+        # Add helpful text for category field
+        if not Category.objects.exists():
+            self.fields['category'].help_text = 'No categories available. Please create a category first.'
+    
+    def clean_store(self):
+        """Validate store field."""
+        store = self.cleaned_data.get('store')
+        if not store:
+            raise forms.ValidationError("Please select a store. If you don't have any stores, create one first.")
+        return store
+    
+    def clean_category(self):
+        """Validate category field."""
+        category = self.cleaned_data.get('category')
+        if not category:
+            raise forms.ValidationError("Please select a category. If no categories exist, create one first.")
+        return category
     
     def clean_stock(self):
         """Validate stock field - explicitly allow 0"""

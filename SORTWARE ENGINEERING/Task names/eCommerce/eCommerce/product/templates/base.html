@@ -60,6 +60,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'product:vendor_product_list' %}">My Products</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'product:vendor_category_list' %}">Manage Categories</a>
+                            </li>
                         {% elif user.groups.all.0.name == 'Buyers' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'product:view_cart' %}">

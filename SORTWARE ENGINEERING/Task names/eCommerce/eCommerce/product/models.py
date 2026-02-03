@@ -13,6 +13,7 @@ class Store(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tweet_id = models.CharField(max_length=50, blank=True, null=True)
     
     class Meta:
         ordering = ['-created_at']
@@ -57,6 +58,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+    tweet_id = models.CharField(max_length=50, blank=True, null=True)
     
     def __str__(self):
         return self.name

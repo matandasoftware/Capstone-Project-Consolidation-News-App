@@ -19,12 +19,19 @@ urlpatterns = [
     path('store/<int:pk>/edit/', views.store_update, name='store_update'),
     path('store/<int:pk>/delete/', views.store_delete, name='store_delete'),
     
-       # Vendor Product Management URLs
+    # Vendor Product Management URLs
     path('vendor/products/', views.vendor_product_list, name='vendor_product_list'),
     path('vendor/product/new/', views.vendor_product_create, name='vendor_product_create'),
     path('vendor/product/new/<int:store_pk>/', views.vendor_product_create, name='vendor_product_create_in_store'),
     path('vendor/product/<int:pk>/edit/', views.vendor_product_update, name='vendor_product_update'),
     path('vendor/product/<int:pk>/delete/', views.vendor_product_delete, name='vendor_product_delete'),
+    
+    # Vendor Category Management URLs
+    path('vendor/categories/', views.vendor_category_list, name='vendor_category_list'),
+    path('vendor/category/new/', views.vendor_category_create, name='vendor_category_create'),
+    path('vendor/category/<int:pk>/edit/', views.vendor_category_update, name='vendor_category_update'),
+    path('vendor/category/<int:pk>/delete/', views.vendor_category_delete, name='vendor_category_delete'),
+    
     
     # Shopping Cart URLs (Buyers Only)
     path('cart/', views.view_cart, name='view_cart'),

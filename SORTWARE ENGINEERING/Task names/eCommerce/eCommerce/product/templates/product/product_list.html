@@ -12,9 +12,11 @@
 <!-- Category Filter -->
 <div class="row mb-3">
     <div class="col-md-12">
-        <a href="{% url 'product:product_list' %}" class="btn btn-outline-primary btn-sm">All Products</a>
+        {% if selected_category %}
+            <a href="{% url 'product:product_list' %}" class="btn btn-primary btn-sm me-2">All Products</a>
+        {% endif %}
         {% for category in categories %}
-            <a href="{% url 'product:product_list' %}?category={{ category.id }}" class="btn btn-outline-secondary btn-sm">{{ category.name }}</a>
+            <a href="{% url 'product:product_list' %}?category={{ category.id }}" class="btn btn-outline-secondary btn-sm me-2">{{ category.name }}</a>
         {% endfor %}
     </div>
 </div>

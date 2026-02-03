@@ -15,13 +15,22 @@ def product_list(request):
     categories = Category.objects.all()
     
     category_id = request.GET.get('category')
+    selected_category = None
+    page_title = "Products"
+    
     if category_id:
         products = products.filter(category_id=category_id)
+        try:
+            selected_category = Category.objects.get(id=category_id)
+            page_title = f"Products - {selected_category.name}"
+        except Category.DoesNotExist:
+            pass
     
     context = {
         "products": products,
         "categories": categories,
-        "page_title": "Products",
+        "selected_category": selected_category,
+        "page_title": page_title,
     }
     return render(request, "product/product_list.html", context)
 
@@ -176,8 +185,14 @@ def vendor_product_list(request):
     vendor_stores = Store.objects.filter(vendor=request.user)
     products = Product.objects.filter(store__in=vendor_stores).order_by('-created_at')
     
+    # Check if vendor has stores and categories
+    has_stores = vendor_stores.exists()
+    has_categories = Category.objects.exists()
+    
     context = {
         'products': products,
+        'has_stores': has_stores,
+        'has_categories': has_categories,
         'page_title': 'My Products',
     }
     return render(request, 'product/vendor_product_list.html', context)
@@ -187,6 +202,17 @@ def vendor_product_list(request):
 @user_passes_test(is_vendor, login_url='/accounts/login/')
 def vendor_product_create(request, store_pk=None):
     """Create new product."""
+    # Check if vendor has any stores
+    vendor_stores = Store.objects.filter(vendor=request.user)
+    if not vendor_stores.exists():
+        messages.warning(request, 'You need to create a store before adding products.')
+        return redirect('product:store_create')
+    
+    # Check if any categories exist
+    if not Category.objects.exists():
+        messages.warning(request, 'You need to create at least one category before adding products.')
+        return redirect('product:vendor_category_create')
+    
     # If store_pk provided, pre-select that store
     initial = {}
     if store_pk:
@@ -581,3 +607,86 @@ def delete_review(request, pk):
         'page_title': 'Delete Review',
     }
     return render(request, 'product/delete_review_confirm.html', context)
+
+
+# Category Management (Vendors Only)
+
+@login_required
+@user_passes_test(is_vendor, login_url='/accounts/login/')
+def vendor_category_list(request):
+    """View all categories (for vendors)."""
+    categories = Category.objects.all().order_by('name')
+    context = {
+        'categories': categories,
+        'page_title': 'Manage Categories',
+    }
+    return render(request, 'product/vendor_category_list.html', context)
+
+
+@login_required
+@user_passes_test(is_vendor, login_url='/accounts/login/')
+def vendor_category_create(request):
+    """Create new category."""
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save()
+            messages.success(request, f'Category "{category.name}" created successfully!')
+            return redirect('product:vendor_category_list')
+    else:
+        form = CategoryForm()
+    
+    context = {
+        'form': form,
+        'page_title': 'Create New Category',
+        'action': 'Create',
+    }
+    return render(request, 'product/vendor_category_form.html', context)
+
+
+@login_required
+@user_passes_test(is_vendor, login_url='/accounts/login/')
+def vendor_category_update(request, pk):
+    """Update category."""
+    category = get_object_or_404(Category, pk=pk)
+    
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            category = form.save()
+            messages.success(request, f'Category "{category.name}" updated successfully!')
+            return redirect('product:vendor_category_list')
+    else:
+        form = CategoryForm(instance=category)
+    
+    context = {
+        'form': form,
+        'category': category,
+        'page_title': f'Edit {category.name}',
+        'action': 'Update',
+    }
+    return render(request, 'product/vendor_category_form.html', context)
+
+
+@login_required
+@user_passes_test(is_vendor, login_url='/accounts/login/')
+def vendor_category_delete(request, pk):
+    """Delete category."""
+    category = get_object_or_404(Category, pk=pk)
+    
+    # Check if category has products
+    if category.products.exists():
+        messages.error(request, f'Cannot delete category "{category.name}" because it has products. Please reassign or delete the products first.')
+        return redirect('product:vendor_category_list')
+    
+    if request.method == 'POST':
+        category_name = category.name
+        category.delete()
+        messages.success(request, f'Category "{category_name}" deleted successfully!')
+        return redirect('product:vendor_category_list')
+    
+    context = {
+        'category': category,
+        'page_title': f'Delete {category.name}',
+    }
+    return render(request, 'product/vendor_category_confirm_delete.html', context)

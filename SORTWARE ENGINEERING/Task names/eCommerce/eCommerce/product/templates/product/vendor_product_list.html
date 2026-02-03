@@ -6,9 +6,25 @@
 <div class="row mb-4">
     <div class="col-md-12">
         <h2>{{ page_title }}</h2>
-        <a href="{% url 'product:vendor_product_create' %}" class="btn btn-success">+ Add New Product</a>
+        {% if has_stores and has_categories %}
+            <a href="{% url 'product:vendor_product_create' %}" class="btn btn-success">+ Add New Product</a>
+        {% endif %}
     </div>
 </div>
+
+{% if not has_stores %}
+<div class="alert alert-warning">
+    <h4>⚠️ No Stores Found</h4>
+    <p>You need to create at least one store before you can add products.</p>
+    <a href="{% url 'product:store_create' %}" class="btn btn-primary">Create Your First Store</a>
+</div>
+{% elif not has_categories %}
+<div class="alert alert-warning">
+    <h4>⚠️ No Categories Found</h4>
+    <p>You need to create at least one category before you can add products. Categories help organize your products and make them easier for buyers to find.</p>
+    <a href="{% url 'product:vendor_category_create' %}" class="btn btn-primary">Create Your First Category</a>
+</div>
+{% else %}
 
 <!-- Products Table -->
 <div class="row">
@@ -69,8 +85,10 @@
         <div class="alert alert-info">
             <h4>No products yet!</h4>
             <p>Start adding products to your stores.</p>
+            <a href="{% url 'product:vendor_product_create' %}" class="btn btn-primary">Add Your First Product</a>
         </div>
         {% endif %}
     </div>
 </div>
+{% endif %}
 {% endblock %}

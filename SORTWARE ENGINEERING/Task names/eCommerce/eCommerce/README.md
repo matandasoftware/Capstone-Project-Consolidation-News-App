@@ -117,17 +117,30 @@ FLUSH PRIVILEGES;
 EXIT;
 ```
 
+**Update Django settings:**
+Edit `eCommerce/settings.py` and update the database configuration with your MySQL credentials:
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecommerce_db',
+        'USER': 'ecommerce_user',          # Your MySQL username
+        'PASSWORD': 'ecommerce_password',   # Your MySQL password
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+```
+
 ### 3. Virtual Environment
 
 **Create and activate:**
 ```bash
 # Windows
-cd eCommerce
 python -m venv myenv
 myenv\Scripts\activate
 
 # Linux/Mac
-cd eCommerce
 python3 -m venv myenv
 source myenv/bin/activate
 ```
@@ -135,13 +148,12 @@ source myenv/bin/activate
 ### 4. Install Dependencies
 
 ```bash
-pip install django
-pip install mysqlclient
-pip install Pillow
+pip install -r requirements.txt
 ```
 
 ### 5. Database Migration
 
+Navigate to the project directory containing `manage.py`:
 ```bash
 cd eCommerce
 python manage.py migrate
@@ -184,6 +196,7 @@ Visit: http://localhost:8000
 ### Vendors
 **Can:**
 - Create and manage stores
+- Add and manage product categories
 - Add, edit, delete products
 - Set product prices and stock
 - Activate/deactivate stores and products
@@ -307,6 +320,10 @@ Access: http://localhost:8000/admin/
 - `/vendor/product/new/` - Add product
 - `/vendor/product/<id>/edit/` - Edit product
 - `/vendor/product/<id>/delete/` - Delete product
+- `/vendor/categories/` - Category list
+- `/vendor/category/new/` - Add category
+- `/vendor/category/<id>/edit/` - Edit category
+- `/vendor/category/<id>/delete/` - Delete category
 
 ### Authentication
 - `/accounts/register/` - Register
