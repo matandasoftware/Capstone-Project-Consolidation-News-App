@@ -1,0 +1,14 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}{% if newsletter %}Edit Newsletter{% else %}Create Newsletter{% endif %} - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% if newsletter %}Edit Newsletter{% else %}Create New Newsletter{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">{% if newsletter %}Update{% else %}Create{% endif %} Newsletter</button>
+    <a href="{% url 'journalist_dashboard' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

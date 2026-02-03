@@ -1,0 +1,35 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}Browse Publishers - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Browse Publishers</h2>
+
+<a href="{% url 'reader_dashboard' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+
+{% if publishers %}
+    <div class="row">
+        {% for publisher in publishers %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ publisher.name }}</h5>
+                    <p class="card-text">{{ publisher.description }}</p>
+                    {% if publisher.website %}
+                        <p><a href="{{ publisher.website }}" target="_blank">Visit Website</a></p>
+                    {% endif %}
+                    
+                    {% if publisher in user.subscribed_publishers.all %}
+                        <button class="btn btn-success" disabled>Subscribed</button>
+                    {% else %}
+                        <a href="{% url 'subscribe_publisher' publisher.pk %}" class="btn btn-primary">Subscribe</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No publishers available.</p>
+{% endif %}
+{% endblock %}

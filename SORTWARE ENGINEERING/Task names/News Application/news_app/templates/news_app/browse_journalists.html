@@ -1,0 +1,35 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}Browse Journalists - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Browse Journalists</h2>
+
+<a href="{% url 'reader_dashboard' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+
+{% if journalists %}
+    <div class="row">
+        {% for journalist in journalists %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ journalist.username }}</h5>
+                    <p class="card-text">
+                        {{ journalist.first_name }} {{ journalist.last_name }}<br>
+                        <small class="text-muted">{{ journalist.email }}</small>
+                    </p>
+                    
+                    {% if journalist in user.subscribed_journalists.all %}
+                        <button class="btn btn-success" disabled>Subscribed</button>
+                    {% else %}
+                        <a href="{% url 'subscribe_journalist' journalist.pk %}" class="btn btn-primary">Subscribe</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No journalists available.</p>
+{% endif %}
+{% endblock %}

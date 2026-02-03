@@ -1,0 +1,192 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-image: url('pictures/WHOLE FOODS.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+header {
+    background: #35424a;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    background: #35424a;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #e8491d;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-left: 4px solid #35424a;
+}
+
+section#about {
+    background-image: url('pictures/WHOLE FOODS 2.png');
+    background-size: cover;
+    background-position: center;
+    padding: 30px;
+    border-radius: 10px;
+    color: #000;
+    background-blend-mode: overlay;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+article {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+aside {
+    background: #e8f5e9;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+figure {
+    margin: 20px 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+figcaption {
+    font-style: italic;
+    color: #666;
+    margin-top: 10px;
+}
+
+footer {
+    background: #35424a;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+h1, h2, h3 {
+    color: #35424a;
+}
+
+.recipe-card {
+    background: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.nutrition-info {
+    background: #e3f2fd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Responsive Design for All Devices */
+@media screen and (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+    main {
+        margin: 10px;
+        padding: 15px;
+    }
+    header h1 {
+        font-size: 1.5em;
+    }
+    header p {
+        font-size: 0.9em;
+    }
+    nav {
+        padding: 5px;
+    }
+    nav a {
+        display: inline-block;
+        margin: 5px;
+        font-size: 0.9em;
+    }
+    section {
+        padding: 15px;
+    }
+    section#about {
+        padding: 20px;
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    h3 {
+        font-size: 1.1em;
+    }
+    figure img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 1.2em;
+    }
+    header p {
+        font-size: 0.8em;
+    }
+    nav a {
+        display: block;
+        margin: 8px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+    }
+    main {
+        margin: 5px;
+        padding: 10px;
+    }
+    section {
+        padding: 10px;
+        border-left: 2px solid #35424a;
+    }
+    section#about {
+        padding: 15px;
+    }
+    article {
+        padding: 10px;
+    }
+    aside {
+        padding: 15px;
+    }
+}

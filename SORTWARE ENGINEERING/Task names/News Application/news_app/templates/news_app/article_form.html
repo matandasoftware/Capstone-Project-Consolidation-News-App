@@ -1,0 +1,27 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}{% if article %}Edit Article{% else %}Create Article{% endif %} - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% if article %}Edit Article{% else %}Create New Article{% endif %}</h2>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please correct the following errors:</strong>
+        <ul>
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li><strong>{{ field }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">{% if article %}Update{% else %}Create{% endif %} Article</button>
+    <a href="{% url 'journalist_dashboard' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
