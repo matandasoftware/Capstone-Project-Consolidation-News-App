@@ -20,8 +20,96 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    
+    <div class="mb-3">
+        <label for="{{ form.title.id_for_label }}" class="form-label">Title *</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+            <div class="text-danger">{{ form.title.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.content.id_for_label }}" class="form-label">Content *</label>
+        {{ form.content }}
+        {% if form.content.errors %}
+            <div class="text-danger">{{ form.content.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.summary.id_for_label }}" class="form-label">Summary *</label>
+        {{ form.summary }}
+        {% if form.summary.errors %}
+            <div class="text-danger">{{ form.summary.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.publisher.id_for_label }}" class="form-label">Publisher</label>
+        <div class="d-flex align-items-center gap-2">
+            <div class="flex-grow-1">
+                {{ form.publisher }}
+            </div>
+            <a href="{% url 'publisher_create' %}?next={{ request.path }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                <i class="bi bi-plus-circle"></i> Add Publisher
+            </a>
+        </div>
+        <small class="form-text text-muted">Can't find your publisher? Click "Add Publisher" to create a new one.</small>
+        {% if form.publisher.errors %}
+            <div class="text-danger">{{ form.publisher.errors }}</div>
+        {% endif %}
+    </div>
+    
     <button type="submit" class="btn btn-primary">{% if article %}Update{% else %}Create{% endif %} Article</button>
     <a href="{% url 'journalist_dashboard' %}" class="btn btn-secondary">Cancel</a>
 </form>
+
+<script>
+    // Add Bootstrap classes to form fields
+    document.querySelectorAll('input[type="text"], textarea, select').forEach(function(element) {
+        element.classList.add('form-control');
+    });
+    
+    // Auto-capitalize first letter of sentences
+    function capitalizeSentences(text) {
+        return text.replace(/(^\w|[.!?]\s+\w)/g, function(match) {
+            return match.toUpperCase();
+        });
+    }
+    
+    // Apply to title, content, and summary fields
+    const titleField = document.getElementById('{{ form.title.id_for_label }}');
+    const contentField = document.getElementById('{{ form.content.id_for_label }}');
+    const summaryField = document.getElementById('{{ form.summary.id_for_label }}');
+    
+    [titleField, contentField, summaryField].forEach(function(field) {
+        if (field) {
+            field.addEventListener('blur', function() {
+                this.value = capitalizeSentences(this.value);
+            });
+            
+            field.addEventListener('input', function(e) {
+                const cursorPos = this.selectionStart;
+                const textBeforeCursor = this.value.substring(0, cursorPos);
+                const textAfterCursor = this.value.substring(cursorPos);
+                
+                // Check if user just typed after a period, exclamation, or question mark
+                if (textBeforeCursor.match(/[.!?]\s+\w$/)) {
+                    const lastChar = textBeforeCursor.charAt(textBeforeCursor.length - 1);
+                    const capitalizedChar = lastChar.toUpperCase();
+                    this.value = textBeforeCursor.slice(0, -1) + capitalizedChar + textAfterCursor;
+                    this.setSelectionRange(cursorPos, cursorPos);
+                }
+                
+                // Capitalize first letter if it's the beginning of the field
+                if (cursorPos === 1 && textBeforeCursor.length === 1) {
+                    const capitalizedChar = textBeforeCursor.toUpperCase();
+                    this.value = capitalizedChar + textAfterCursor;
+                    this.setSelectionRange(cursorPos, cursorPos);
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

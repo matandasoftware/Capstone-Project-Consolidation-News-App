@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
-from news_app.models import Article, Newsletter
+from news_app.models import Article, Newsletter, Publisher
 
 
 class Command(BaseCommand):
@@ -110,8 +110,13 @@ class Command(BaseCommand):
         
         journalists_group.permissions.add(add_newsletter, view_newsletter, change_newsletter, delete_newsletter)
         
+        # Assign permissions for Publisher (add)
+        publisher_ct = ContentType.objects.get_for_model(Publisher)
+        add_publisher = Permission.objects.get(codename='add_publisher', content_type=publisher_ct)
+        journalists_group.permissions.add(add_publisher)
+        
         self.stdout.write(self.style.SUCCESS(
-            'Assigned permissions to journalists_group: full CRUD on articles and newsletters (except approval)'
+            'Assigned permissions to journalists_group: full CRUD on articles and newsletters (except approval), add publishers'
         ))
         
         self.stdout.write(self.style.SUCCESS('\nAll groups created and permissions assigned successfully!'))

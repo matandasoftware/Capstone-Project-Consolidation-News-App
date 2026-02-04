@@ -3,7 +3,10 @@ from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Article, CustomUser
-import requests
+from .twitter_utils import tweet_article
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 @receiver(pre_save, sender=Article)
@@ -23,17 +26,16 @@ def store_previous_approval_status(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Article)
 def handle_article_approval(sender, instance, created, **kwargs):
-    '''
+    """
     Handle article approval by sending emails and posting to X.
     Triggered when an article's approval status changes from False to True.
-    '''
-    # Get previous approval status
+    """
     previous_approval = getattr(instance, '_previous_is_approved', False)
     
-    # Check if article was just approved
     if instance.is_approved and not previous_approval:
+        print(f"\n📢 Article APPROVED: {instance.title}\n")
         send_email_to_subscribers(instance)
-        post_to_x(instance)
+        tweet_article(instance)
 
 
 def get_subscribers_for_article(article):
@@ -107,53 +109,3 @@ To manage your subscriptions, log in to your account.
         except Exception as e:
             print(f"Failed to send email to {subscriber.email}: {str(e)}")
 
-
-def post_to_x(article):
-    '''
-    Post article announcement to X (Twitter) when approved.
-    Uses X API v2 to create a tweet with article details.
-    Fails gracefully if X API is not configured or request fails.
-    '''
-    # X API configuration
-    X_API_URL = "https://api.twitter.com/2/tweets"
-    X_BEARER_TOKEN = getattr(settings, 'X_BEARER_TOKEN', None)
-    
-    if not X_BEARER_TOKEN:
-        print("X API token not configured. Skipping X post.")
-        return
-    
-    # Build article URL
-    article_url = f"http://127.0.0.1:8000/article/{article.slug}/"
-    
-    # Build tweet text
-    tweet_text = f"""📰 New Article Published!
-
-{article.title}
-
-{article.summary[:100]}...
-
-Read more: {article_url}
-
-#{article.publisher.name.replace(' ', '') if article.publisher else 'IndependentJournalism'} #News
-"""
-    
-    # Prepare API request
-    headers = {
-        "Authorization": f"Bearer {X_BEARER_TOKEN}",
-        "Content-Type": "application/json",
-    }
-    
-    payload = {
-        "text": tweet_text
-    }
-    
-    # Send request to X API
-    try:
-        response = requests.post(X_API_URL, json=payload, headers=headers, timeout=10)
-        
-        if response.status_code == 201:
-            print(f"Successfully posted article to X: {article.title}")
-        else:
-            print(f"Failed to post to X. Status: {response.status_code}, Response: {response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error posting to X: {str(e)}")

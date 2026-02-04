@@ -142,9 +142,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # X (TWITTER) API CONFIGURATION
-# Add your Bearer Token here when approved
-# Get token from: https://developer.twitter.com/en/portal/projects-and-apps
-X_BEARER_TOKEN = None  # Replace with actual token when approved
-
-# Example (when you get the token):
-# X_BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789'
+TWITTER_API_KEY = 'TnmWMTek8CftbTcSnJexrJ0CY'
+TWITTER_API_SECRET = '0BAwqBHMi4H9oYra8jcJp0jWEx66WeskqNCMQyC64LZB4V9OKR'
+TWITTER_ACCESS_TOKEN = '2016866366821666816-S4hY89OiyueUkyJ0sI4emAILiSvbS0'
+TWITTER_ACCESS_TOKEN_SECRET = 'eTI5lafYSatZTsb6uJIIMnOleuXE14HpjCxLvFfX0Os4p'
+TWITTER_ENABLED = True  # Set to False to disable X integration

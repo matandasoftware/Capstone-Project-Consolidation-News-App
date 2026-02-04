@@ -34,9 +34,10 @@ urlpatterns = [
     path('editor/dashboard/', views.editor_dashboard, name='editor_dashboard'),
     path('editor/article/<int:pk>/approve/', views.article_approve, name='article_approve'),
     
-    # ============================================
+    # Publisher management
+    path('publisher/new/', views.publisher_create, name='publisher_create'),
+    
     # API ENDPOINTS (REST API)
-    # ============================================
     
     # Authentication endpoint
     path('api/login/', api_views.api_login, name='api_login'),

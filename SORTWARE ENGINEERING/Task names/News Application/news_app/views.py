@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.db import models
 from .models import CustomUser, Publisher, Article, Newsletter
-from .forms import UserRegistrationForm, ArticleForm, NewsletterForm
+from .forms import UserRegistrationForm, ArticleForm, NewsletterForm, PublisherForm
 
 
 # Public Views
@@ -347,4 +347,27 @@ def article_approve(request, pk):
         return redirect('editor_dashboard')
     
     return render(request, 'news_app/article_approve.html', {'article': article})
+
+
+@login_required
+@permission_required('news_app.add_publisher', raise_exception=True)
+def publisher_create(request):
+    """Create a new publisher on the spot."""
+    if request.method == 'POST':
+        form = PublisherForm(request.POST)
+        if form.is_valid():
+            publisher = form.save()
+            messages.success(request, f'Publisher "{publisher.name}" created successfully!')
+            
+            # If opened in a new tab from article/newsletter form, close window
+            if request.GET.get('next'):
+                return render(request, 'news_app/publisher_created.html', {'publisher': publisher})
+            
+            # Otherwise redirect to home
+            return redirect('home')
+    else:
+        form = PublisherForm()
+    
+    return render(request, 'news_app/publisher_form.html', {'form': form})
+
 

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, Article, Newsletter
+from .models import CustomUser, Article, Newsletter, Publisher
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -32,4 +32,15 @@ class NewsletterForm(forms.ModelForm):
     class Meta:
         model = Newsletter
         fields = ['title', 'content', 'publisher']
+
+
+class PublisherForm(forms.ModelForm):
+    """Form for creating publishers on the spot."""
+    class Meta:
+        model = Publisher
+        fields = ['name', 'description', 'website']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 3}),
+        }
+
 
