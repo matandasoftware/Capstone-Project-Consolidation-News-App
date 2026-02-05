@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover healthy cooking techniques focusing on high-protein, low-fat whole foods prepared in creative ways">
+    <title>Healthy Cooking - High Protein, Low Calorie Meals</title>
+    
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="Styles.css">
+    
+    <!-- Inline Styles - Today's 8 CSS Task Requirements -->
+    <!-- These styles override the external stylesheet to demonstrate CSS specificity -->
+    <style>
+        /*  TASK 1: Apply Different Font Family */
+        body {
+            font-family: 'Verdana', 'Geneva', sans-serif;
+        }
+        
+        /* TASK 2: Modify Heading Colors & Sizes
+           Create Visual Hierarchy */
+        h1 {
+            color: #2d5016; /* Deep forest green - healthy theme */
+            font-size: 2.8em;
+            margin-top: 0.5em;
+            margin-bottom: 0.3em;
+        }
+        
+        h2 {
+            color: #ff6b35; /* Vibrant orange - energy/warmth */
+            font-size: 2.2em;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        
+        h3 {
+            color: #35424a; /* Dark blue-gray */
+            font-size: 1.6em;
+        }
+        
+        /* TASK 3: Change Paragraph Text Color
+           Ensure Good Contrast with Background */
+        p {
+            color: #2c3e50; /* Dark blue-gray for excellent readability */
+            line-height: 1.8;
+        }
+        
+        /* TASK 4: Set Background Colors
+           For Body and Specific Sections */
+        body {
+            background-color: #f8f9f0; /* Warm light background */
+        }
+        
+        section {
+            background-color: #ffffff; /* Clean white for content sections */
+        }
+        
+        header {
+            background-color: #2d5016; /* Forest green matching h1 */
+        }
+        
+        footer {
+            background-color: #2d5016; /* Consistent with header */
+        }
+        
+        /*  TASK 5: Adjust Text Alignment
+           To Improve Overall Layout */
+        header {
+            text-align: center;
+        }
+        
+        footer {
+            text-align: center;
+        }
+        
+        section#about p:first-of-type {
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        figcaption {
+            text-align: center;
+        }
+        
+        /* TASK 6: Style Bold and Italic Elements
+           To Emphasize Important Content */
+        b, strong {
+            color: #ff6b35; /* Orange to match h2 - draws attention */
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+        
+        em, i {
+            color: #2d5016; /* Green to match h1 */
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        /* TASK 7: Add/Adjust Margin and Padding
+           Create Space and Prevent Clutter */
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0.5em;
+            padding: 0.3em 0;
+        }
+        
+        h2 {
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+            padding-top: 0.5em;
+        }
+        
+        h3 {
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+        }
+        
+        p {
+            margin-bottom: 1.2em;
+            padding: 0.3em 0;
+        }
+        
+        section {
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+        
+        article {
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        /* TASK 8: Change Link Color and Underline
+           Make Links Stand Out or Blend In */
+        a {
+            color: #ff6b35; /* Vibrant orange - stands out */
+            text-decoration: none; /* Remove underline for clean look */
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #2d5016; /* Green on hover - interactive feedback */
+            text-decoration: underline; /* Add underline on hover */
+            transform: translateY(-1px);
+        }
+        
+        a:visited {
+            color: #d45a2a; /* Slightly darker orange for visited links */
+        }
+        
+        nav a {
+            color: #ffffff; /* Keep nav links white */
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            color: #ff6b35; /* Orange hover for nav */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🍳 Healthy Cooking Journey</h1>
+        <p>High Protein, Low Fat, Whole Foods - Creatively Prepared for Your Health Goals</p>
+    </header>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#techniques">Cooking Techniques</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#tips">Tips & Benefits</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>My Cooking Philosophy</h2>
+            <p>Welcome to my healthy cooking showcase! I'm passionate about preparing delicious, nutritious meals that support health and body maintenance goals. My approach focuses on:</p>
+            <ul>
+                <li><strong>High Protein:</strong> Building and maintaining muscle with lean proteins</li>
+                <li><strong>Low Fat:</strong> Minimizing unnecessary fats while keeping meals flavorful</li>
+                <li><strong>Whole Foods:</strong> Using natural, unprocessed ingredients</li>
+                <li><strong>Creative Preparation:</strong> Avoiding stewed meals and exploring innovative cooking methods</li>
+                <li><strong>Calorie Conscious:</strong> Creating satisfying meals that support weight management</li>
+            </ul>
+            
+            <figure>
+                <img src="pictures/WHOLE FOODS.jpg" alt="Fresh whole foods including vegetables, lean proteins, and grains" width="600" height="400">
+                <figcaption>Fresh whole foods - the foundation of healthy cooking</figcaption>
+            </figure>
+        </section>
+
+        <section id="techniques">
+            <h2>Creative Cooking Techniques</h2>
+            <p>I utilize various cooking methods that preserve nutrients and minimize added fats:</p>
+            
+            <article>
+                <h3>🔥 Grilling & Broiling</h3>
+                <p>Perfect for achieving caramelization and smoky flavors without added oils. Ideal for lean proteins like chicken breast, fish, and vegetables.</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Excess fat drips away, no added oils needed, quick cooking time
+                </div>
+            </article>
+
+            <article>
+                <h3>🌿 Air Frying</h3>
+                <p>Achieves crispy textures with minimal oil. Great for proteins, vegetables, and even creating "fried" textures with 80% less fat.</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Crispy results, uses little to no oil, reduces calories significantly
+                </div>
+            </article>
+
+            <article>
+                <h3>🥘 Baking & Roasting</h3>
+                <p>Dry-heat methods that enhance natural flavors. Perfect for batch cooking lean proteins and roasting vegetables with herbs and spices.</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Develops complex flavors, hands-off cooking, easy meal prep
+                </div>
+            </article>
+
+            <article>
+                <h3>🍲 Steaming & Poaching</h3>
+                <p>Gentle cooking methods that retain nutrients and natural flavors. Excellent for fish, chicken, and vegetables.</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Zero added fat, preserves vitamins and minerals, tender results
+                </div>
+            </article>
+        </section>
+
+        <aside>
+            <h3>💡 Quick Tip</h3>
+            <p>Season your proteins with herbs, spices, citrus, and vinegar instead of relying on oil-heavy marinades. This adds incredible flavor with virtually no calories!</p>
+        </aside>
+
+        <section id="recipes">
+            <h2>My Favorite Healthy Meals</h2>
+            
+            <article class="recipe-card">
+                <figure style="margin: 0 0 15px 0;">
+                    <img src="pictures/TROPICAL MUESLI.webp" alt="Tropical muesli with nuts and yogurt" width="100%" style="border-radius: 5px; max-height: 300px; object-fit: cover;">
+                </figure>
+                <h3>🥣 Tropical Muesli Power Bowl</h3>
+                <p><strong>Prep Time:</strong> 5 minutes | <strong>Meal Type:</strong> Breakfast</p>
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    <li>Tropical muesli</li>
+                    <li>Crushed pecans</li>
+                    <li>Crushed almonds</li>
+                    <li>Double cream plain yogurt</li>
+                    <li>Honey (drizzled on top)</li>
+                </ul>
+                <p><strong>Method:</strong> Combine muesli in a bowl, add crushed pecans and almonds, top with double cream plain yogurt, and drizzle with honey</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> High in protein, healthy fats from nuts, probiotics from yogurt, natural sweetness from honey
+                </div>
+            </article>
+
+            <article class="recipe-card">
+                <h3>🍳 Fried Eggs with Sardines</h3>
+                <p><strong>Prep Time:</strong> 5 minutes | <strong>Cook Time:</strong> 5 minutes | <strong>Meal Type:</strong> Breakfast/Lunch</p>
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    <li>Eggs</li>
+                    <li>Vegetable oil (for frying)</li>
+                    <li>Sardines</li>
+                    <li>Garlic (sprinkled)</li>
+                    <li>Black pepper (sprinkled)</li>
+                </ul>
+                <p><strong>Method:</strong> Heat vegetable oil in pan, fry eggs to desired doneness, serve with sardines and season with garlic and black pepper</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Extremely high protein from eggs and sardines, omega-3 fatty acids, vitamin D, quick and satisfying
+                </div>
+            </article>
+
+            <article class="recipe-card">
+                <figure style="margin: 0 0 15px 0;">
+                    <img src="pictures/BAKED CHICKEN BREAST.webp" alt="Baked chicken breast with vegetables" width="100%" style="border-radius: 5px; max-height: 300px; object-fit: cover;">
+                </figure>
+                <h3>🍗 Baked Protein & Carb Combo</h3>
+                <p><strong>Prep Time:</strong> 10 minutes | <strong>Cook Time:</strong> 50-60 minutes | <strong>Meal Type:</strong> Main Meal</p>
+                <p><strong>Base Carbohydrate (Choose One):</strong></p>
+                <ul>
+                    <li>Baked potatoes</li>
+                    <li>Baked sweet potatoes</li>
+                    <li>Brown rice</li>
+                </ul>
+                <p><strong>Protein Options (Baked):</strong></p>
+                <ul>
+                    <li>Chicken breast (most frequent choice)</li>
+                    <li>Beef</li>
+                    <li>Lamb</li>
+                    <li>Yellowtail fish</li>
+                </ul>
+                <p><strong>Spice Blend:</strong></p>
+                <ul>
+                    <li>Garlic</li>
+                    <li>Paprika</li>
+                    <li>Black pepper</li>
+                    <li>Six Gun Grill Spice</li>
+                    <li>Rosemary</li>
+                    <li>Ginger</li>
+                </ul>
+                <p><strong>Method:</strong> Season protein of choice with spice blend. Bake in oven at 190°C for 35-45 minutes without oil for less fatty food, then grill for 10-15 minutes at 190°C for perfect texture and color. For potatoes: wash, pierce with fork, bake alongside protein. For brown rice: cook separately according to package instructions</p>
+                <p><strong>💡 Tip:</strong> When baking in an oven, try not using oil for less fatty food - the spices provide plenty of flavor!</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Lean protein for muscle maintenance, complex carbs for energy, minimal added fats, versatile and customizable
+                </div>
+            </article>
+
+            <article class="recipe-card">
+                <h3>🍫 Dark Chocolate Snack</h3>
+                <p><strong>Prep Time:</strong> 0 minutes | <strong>Meal Type:</strong> Snack</p>
+                <p><strong>Serving:</strong> One block per day</p>
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    <li>100% dark chocolate</li>
+                </ul>
+                <p><strong>Method:</strong> Enjoy one block as a daily healthy snack between meals</p>
+                <p><strong>⚠️ Important:</strong> Consult with a doctor before consuming 100% dark chocolate regularly, especially if you have any health conditions</p>
+                <div class="nutrition-info">
+                    <strong>Benefits:</strong> Rich in antioxidants, no added sugar, satisfies sweet cravings, contains beneficial minerals like magnesium and iron, assists with cognitive function and brain health
+                </div>
+            </article>
+
+            <figure>
+                <img src="pictures/BAKED CHICKEN BREAST AND POTATO PLATE.webp" alt="My go-to meal - baked chicken breast with potato on a plate" width="600" height="400">
+                <figcaption>My go-to main meal: baked chicken breast with potato - simple, nutritious, and delicious</figcaption>
+            </figure>
+        </section>
+
+        <section id="tips">
+            <h2>Tips & Health Benefits</h2>
+            
+            <article>
+                <h3>🎯 Meal Prep Strategies</h3>
+                <ul>
+                    <li>Batch-cook proteins on Sunday (grill, bake, or air-fry multiple portions)</li>
+                    <li>Pre-cut vegetables for quick assembly during the week</li>
+                    <li>Use spice blends to create variety without extra prep time</li>
+                    <li>Store cooked proteins in portioned containers for grab-and-go meals</li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>🌟 Benefits of This Cooking Style</h3>
+                <ul>
+                    <li><strong>Weight Management:</strong> Lower calories make it easier to maintain a deficit or balance</li>
+                    <li><strong>Muscle Preservation:</strong> High protein intake supports lean muscle mass</li>
+                    <li><strong>Energy Levels:</strong> Whole foods provide sustained energy without crashes</li>
+                    <li><strong>Better Digestion:</strong> Less heavy, fatty foods means easier digestion</li>
+                    <li><strong>Improved Health Markers:</strong> Lower fat intake can improve cholesterol and heart health</li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>🔪 Essential Kitchen Tools</h3>
+                <ul>
+                    <li>Cooking stove with an oven for baking and grilling</li>
+                    <li>Air fryer for crispy, low-fat results</li>
+                    <li>Grill pan or outdoor grill for char and flavor</li>
+                    <li>Quality non-stick bakeware</li>
+                    <li>Instant-read thermometer for perfect protein cooking</li>
+                    <li>Spice grinder for fresh seasonings</li>
+                </ul>
+            </article>
+        </section>
+
+        <aside>
+            <h3>📊 Did You Know?</h3>
+            <p>Cooking methods matter! Grilling or air-frying chicken breast instead of pan-frying can save you over 100 calories per serving while maintaining all the protein content.</p>
+        </aside>
+
+        <section id="contact">
+            <h2>Connect & Share</h2>
+            <p>I love connecting with fellow health-conscious food enthusiasts! Feel free to reach out to share recipes, ask questions, or discuss creative cooking techniques.</p>
+            <address>
+                <p><strong>Email:</strong> <a href="mailto:pfarelochannel@gmail.com">pfarelochannel@gmail.com</a></p>
+                <p><strong>Instagram:</strong> @healthy_cooking_journey</p>
+                <p><strong>Location:</strong> CNR Malibongwe and Northumberland Roodepoort 2118</p>
+            </address>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Healthy Cooking Journey | All Rights Reserved</p>
+        <p>Dedicated to promoting nutritious, delicious, and creative whole food cooking</p>
+        <p><small>Disclaimer: Nutritional information is approximate. A doctor should be consulted prior to beginning this diet. Consult with a healthcare provider for personalized dietary advice.</small></p>
+    </footer>
+</body>
+</html>

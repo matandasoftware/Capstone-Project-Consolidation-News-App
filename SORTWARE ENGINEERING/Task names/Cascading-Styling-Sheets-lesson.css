@@ -1,0 +1,77 @@
+/* inline styling*/
+
+<p style="font-size: 46px; color: blue">
+    This is the partagraph where i describe mysellf.
+    </p>
+
+/* internal css*/
+<style>
+    p {
+        color: red;
+        font-family: Arial, Helvetica;
+        backgroung-color: blue;
+
+    }
+</style>  
+
+/* selectors for paragraphs and body */
+
+p {
+    color: red;
+    font-family: Arial, Helvatica;
+    background-color: blue
+
+}
+
+body {
+    text-align: center;
+}
+
+/* when you use a class selector a class name will always be preceeded by a dot*/
+
+.more-burtton {
+    font-weight: bold;
+    font-family: cursive;
+}
+
+/* External css*/
+
+/* linking an external file to a specific html file */
+
+<link href="examplesCSS.css" rel="stylesheet" type="text/css" />
+
+/* cool css tricks */
+
+/* any button which the user's pointer is hovering */
+
+button: hover {
+    color: blue;
+}
+
+/* applying a certain rule to an element that is a child of another element */
+
+li li {
+    list-style-type: circle;
+}
+
+/* PIXELS*/
+
+/* width and height */
+.box {
+width: 200px;
+height: 150px'
+}
+
+/* margins and padding */
+.container {
+    margin: 20px; /* margin outside*/
+    padding: 10px; /* padding inside the container */
+}
+
+/* paragraphs */
+p{
+    font-size: 16px;
+}
+
+/* THE BOX MODEL */
+/* content, padding, boarder and margin */

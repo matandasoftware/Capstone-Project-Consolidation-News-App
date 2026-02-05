@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-12">
+        <a href="{% url 'product:store_list' %}" class="btn btn-outline-secondary btn-sm">&larr; Back to My Stores</a>
+    </div>
+</div>
+
+<!-- Store Info -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h2>{{ store.name }}</h2>
+                        <p class="text-muted">{{ store.description }}</p>
+
+                        {% if store.is_active %}
+                        <span class="badge bg-success">Active</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+
+                        <p class="text-muted small mt-2">
+                            <strong>Created:</strong> {{ store.created_at|date:"F d, Y" }}<br>
+                            <strong>Last Updated:</strong> {{ store.updated_at|date:"F d, Y" }}
+                        </p>
+                    </div>
+                    <div>
+                        <a href="{% url 'product:store_update' store.pk %}" class="btn btn-warning">Edit Store</a>
+                        <a href="{% url 'product:store_delete' store.pk %}" class="btn btn-danger">Delete Store</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Store Products -->
+<div class="row mb-4">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <div>
+            <h3>Products in this Store</h3>
+            <p class="text-muted">Manage products for {{ store.name }}</p>
+        </div>
+        <div>
+            <a href="{% url 'product:vendor_product_create_in_store' store.pk %}" class="btn btn-success">+ Add Product to This Store</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% if products %}
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 product-card">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
+            {% else %}
+            <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center product-image">
+                <span>No Image</span>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                <p class="product-price">R{{ product.price }}</p>
+                {% with stock_info=product.get_stock_display %}
+                    <span class="badge {{ stock_info.class }}">{{ stock_info.text }}</span>
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <h5>No products in this store yet!</h5>
+            <p>Add products to start selling.</p>
+            <!-- Product add button will be added in Phase 3 -->
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

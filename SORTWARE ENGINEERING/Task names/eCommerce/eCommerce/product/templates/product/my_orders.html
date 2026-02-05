@@ -1,0 +1,77 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>{{ page_title }}</h2>
+    </div>
+</div>
+
+{% if orders %}
+<div class="row">
+    <div class="col-md-12">
+        {% for order in orders %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Order #{{ order.id }}</strong>
+                        <br><small class="text-muted">{{ order.order_date|date:"F d, Y H:i" }}</small>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <span class="badge
+                            {% if order.status == 'pending' %}bg-warning
+                            {% elif order.status == 'paid' %}bg-info
+                            {% elif order.status == 'shipped' %}bg-primary
+                            {% elif order.status == 'delivered' %}bg-success
+                            {% else %}bg-danger
+                            {% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                        <br><strong>R{{ order.total_amount }}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'product:product_detail' item.product.pk %}">{{ item.product.name }}</a>
+                                <br><small class="text-muted">{{ item.product.store.name }}</small>
+                            </td>
+                            <td>{{ item.quantity }}</td>
+                            <td>R{{ item.price }}</td>
+                            <td>R{{ item.get_subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h4>No orders yet!</h4>
+            <p>You haven't placed any orders yet. Start shopping!</p>
+            <a href="{% url 'product:product_list' %}" class="btn btn-primary">Browse Products</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

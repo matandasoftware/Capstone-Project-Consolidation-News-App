@@ -1,0 +1,18 @@
+# Check installation
+node --version
+npm --version
+
+# Install dependencies
+npm install
+
+# Install client dependencies
+cd client
+npm install
+
+# Install server dependencies  
+cd ../server
+npm install
+
+# Go back to root and start app
+cd ..
+npm run dev

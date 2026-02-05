@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #0d6efd; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background-color: #f8f9fa; }
+        .order-info { background-color: white; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #e9ecef; }
+        .total { font-size: 1.2em; font-weight: bold; text-align: right; padding: 15px; }
+        .footer { text-align: center; padding: 20px; color: #6c757d; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Order Confirmation</h1>
+            <p>Thank you for your purchase!</p>
+        </div>
+        
+        <div class="content">
+            <div class="order-info">
+                <h2>Order Details</h2>
+                <p><strong>Order Number:</strong> #{{ order.id }}</p>
+                <p><strong>Order Date:</strong> {{ order.order_date|date:"F d, Y H:i" }}</p>
+                <p><strong>Customer:</strong> {{ buyer.username }}</p>
+                <p><strong>Email:</strong> {{ buyer.email }}</p>
+                <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+            </div>
+            
+            <h2>Items Ordered</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>R{{ item.price }}</td>
+                        <td>R{{ item.get_subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="total">
+                <p>Total Amount: R{{ order.total_amount }}</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated email. Please do not reply.</p>
+            <p>&copy; 2026 eCommerce Store. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

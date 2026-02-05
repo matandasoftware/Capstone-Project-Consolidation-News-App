@@ -1,0 +1,61 @@
+1.An algorithm that asks a user to enter a positive number repeatedly until 
+the user enters a zero value, then determines and outputs the largest of 
+the numbers that were entered.
+
+                                                     # request a positive number entry from user
+(i)    get  positive_number_entry
+(ii)   while  positive_number_entry != 0 
+(iii)	  repeat (i)
+(iv)   if positive_number_entry > largest_entry             # if positive_number_enty = maximum number then, update largest_number
+(v)		   then positive_number_entey = largest_number
+(vi)   if positive_number_entey = 0
+(vii)  print("largest number entered is:", largest_number)
+
+2.An algorithm that requests a user to input their name and then stores 
+their name in a variable called first_name. Subsequently, the algorithm 
+should print out first_name along with the phrase “Hello, World”. 
+
+(i)   first_name = input("please ener your name: )                  # request user's input name and store it as first_name
+(ii)  print(first_name  + "Hello World")                            # print the stored first_name along with phrase "Hello, World"
+
+3.An algorithm that reads an arbitrary number of integers and then returns 
+their arithmetic average. 
+    sum = 0
+    count = 0                                        # create variables of sum and count that both start from 0
+                                                                       
+                                                                          
+    read integers                                                                   
+    while intiger is not empty                       # Add the integer to sum, Increment count by 1 and Read the next integer. repeat until no intiger is left 
+    sum = sum + intiger
+	count = count + 1
+	average = sum/coun	                             # After all integers are read, calculate the arithmetic average by dividing the sum by the count.
+	average = calculate_average()
+    print("The arithmetic average is:", average)     # Return the arithmetic average
+
+4.An algorithm that reads a grocery list and prints out the products (in 
+alphabetical order) that are still left to buy. 
+
+     grocery_set = set(grocery_list)                                  # convert the grocery list and the list of bought items into two separe sets
+  bought_grocery = set(bought_list)                                   
+   products_left = grocery_set - bought_grocery                       # Create an empty list to store the products that are still left to buy
+   sorted_products_left = sorted(products_left)                       # Sort the list in alphabetical order                            
+                                                                  
+    for product in sorted_products_left:                              # print the remaining list to buy by looping through sorted_products_left(list)
+	print(product)
+ 
+
+5.An algorithm for the flowchart on the following page: 
+
+ 
+
+X                             # variable
+Y                             # variable
+
+S = "x + Y"                   # the processings or calculations that need to be done and taken to format strings
+A = "S/2"         
+P = "X * Y"    
+           
+		                      # the displays are as multiple format strings
+displays = f"{s}\n{A}\n{P}\n"
+	print(displays)           # returning the calculatins
+		   

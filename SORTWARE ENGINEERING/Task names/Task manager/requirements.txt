@@ -1,0 +1,9 @@
+# Task Manager Application - Requirements
+# Python 3.8+
+
+# No external dependencies required for basic functionality
+# All features use Python standard library
+
+# Optional: For development and testing
+pytest>=7.0.0
+flake8>=6.0.0

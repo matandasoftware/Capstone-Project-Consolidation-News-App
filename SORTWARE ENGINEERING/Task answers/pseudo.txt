@@ -1,0 +1,42 @@
+1.An algorithm that asks a user to enter a positive number repeatedly until 
+the user enters a zero value, then determines and outputs the largest of 
+the numbers that were entered.
+
+get a positive number entry
+repeat to get a positive number entry  
+if a zero is entered
+print the largest positive number enty 
+
+2.An algorithm that requests a user to input their name and then stores 
+their name in a variable called first_name. Subsequently, the algorithm 
+should print out first_name along with the phrase “Hello, World”. 
+
+request user input`s name and store it as first_name
+print the stored first_name along with phrase "Hello, World"
+
+3.An algorithm that reads an arbitrary number of integers and then returns 
+their arithmetic average. 
+
+(i)create variables of sum and count that both start from 0
+the sum variable will consist of the sum of all the itigers
+the count variable will consist of all the number of all the intigers
+(ii)read every intiger and add it to every other itiger to get the sum variable
+(iii)count every intiger to get the count variable
+Repeat (ii) and (iii) until there are no more integers to read.
+Calculate the arithmetic average by dividing the sum variable by the count variable.
+print the arithmetic average
+
+4.An algorithm that reads a grocery list and prints out the products (in 
+alphabetical order) that are still left to buy. 
+
+Read the grocery list and store it in a list 
+Sort the list in alphabetical order
+Create an empty list to store the products that are still left to buy
+pick a product to buy from the alphabetically sorted list
+For each product, ask the user to enter/mark whether it has been bought or not
+If the product has not been bought, add it to the list of products that are still left to buy
+After purchasing some of the alphabetically sorted, print out the list of products that are still left to buy(not entered/marked as bought)
+
+5.An algorithm for the flowchart on the following page: 
+
+An algorithm that has two variable X and Y, uses their inputs to get S which is the addition of the two variable, A which is the mean of the two variables and P which is the product of the two variables.

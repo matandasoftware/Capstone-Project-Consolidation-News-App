@@ -1,0 +1,9 @@
+https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPO-NAME
+
+(Replace with your actual GitHub Pages URL after deployment)
+
+Instructions:
+1. Deploy your healthy-cooking website to GitHub Pages (see README.md for instructions)
+2. Copy the URL from GitHub Pages
+3. Replace the text above with your actual URL
+4. Save this file

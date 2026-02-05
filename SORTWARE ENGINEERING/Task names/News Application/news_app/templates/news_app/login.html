@@ -1,0 +1,17 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}Login - News App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h2 class="mb-4">Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a href="{% url 'register' %}" class="btn btn-link">Don't have an account? Register</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

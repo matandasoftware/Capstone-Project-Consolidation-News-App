@@ -1,0 +1,21 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wrapdBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8f5e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c8e6c8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="200" fill="url(#wrapdBg)"/>
+  <!-- Wrap tortilla -->
+  <ellipse cx="150" cy="100" rx="80" ry="40" fill="#f5deb3" stroke="#deb887" stroke-width="2"/>
+  <!-- Filling visible -->
+  <path d="M 80 85 Q 150 75 220 85 Q 210 95 150 90 Q 90 95 80 85" fill="#228b22"/>
+  <path d="M 85 95 Q 150 88 215 95 Q 205 105 150 100 Q 95 105 85 95" fill="#ff6347"/>
+  <path d="M 90 105 Q 150 98 210 105 Q 200 115 150 110 Q 100 115 90 105" fill="#ffd700"/>
+  <!-- Chips around -->
+  <rect x="40" y="140" width="6" height="25" fill="#ffd700" transform="rotate(10 43 152)"/>
+  <rect x="50" y="145" width="6" height="20" fill="#ffd700" transform="rotate(-15 53 155)"/>
+  <rect x="250" y="140" width="6" height="25" fill="#ffd700" transform="rotate(20 253 152)"/>
+  <rect x="260" y="142" width="6" height="22" fill="#ffd700" transform="rotate(-10 263 153)"/>
+  <text x="150" y="185" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#2e7d32">Vruuupaaa!</text>
+</svg>

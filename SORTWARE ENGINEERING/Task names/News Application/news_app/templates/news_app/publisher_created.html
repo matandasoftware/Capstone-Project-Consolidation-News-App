@@ -1,0 +1,39 @@
+{% extends 'news_app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h3><i class="bi bi-check-circle"></i> Publisher Created Successfully!</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">Publisher "{{ publisher.name }}" has been created.</p>
+                    <div class="alert alert-info">
+                        <strong>Next Steps:</strong>
+                        <ol class="text-start mt-2">
+                            <li>Close this tab/window</li>
+                            <li>Return to your article or newsletter form</li>
+                            <li>Refresh the page (F5 or Ctrl+R)</li>
+                            <li>Select "{{ publisher.name }}" from the publisher dropdown</li>
+                        </ol>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="window.close()">
+                        <i class="bi bi-x-circle"></i> Close This Window
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Automatically close window after 3 seconds (optional)
+    setTimeout(function() {
+        if (window.opener) {
+            window.close();
+        }
+    }, 3000);
+</script>
+{% endblock %}

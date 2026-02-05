@@ -1,0 +1,35 @@
+﻿ {% extends 'base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>{{ page_title }}</h2>
+    </div>
+</div>
+
+<!-- Categories Grid -->
+<div class="row">
+    {% if categories %}
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 category-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-text">{{ category.description|truncatewords:30 }}</p>
+                    <a href="{% url 'product:category_detail' category.pk %}" class="btn btn-primary">View Products</a>
+                </div>
+                <div class="card-footer text-muted">
+                    <small>Created: {{ category.created_at|date:"M d, Y" }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-md-12">
+            <div class="alert alert-info">No categories available.</div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

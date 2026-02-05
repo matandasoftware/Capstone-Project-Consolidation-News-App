@@ -1,0 +1,17 @@
+# Menu Images
+
+This directory contains placeholder images for menu items.
+
+## Available Images:
+- `placeholder.jpg` - Default placeholder image
+- `ayoba.jpg` - Ayoba wrap image
+- `siphos.jpg` - Siphos combo image
+- `russian-special.jpg` - Russian Special combo image
+- `chicken-wrap.jpg` - Chicken wrap image
+- `beef-burger.jpg` - Beef burger image
+- `veggie-wrap.jpg` - Veggie wrap image
+- `chips-gravy.jpg` - Chips and gravy image
+- `chicken-burger.jpg` - Chicken burger image
+
+## Note:
+These are placeholder references. In a production environment, you would add actual food images to this directory.

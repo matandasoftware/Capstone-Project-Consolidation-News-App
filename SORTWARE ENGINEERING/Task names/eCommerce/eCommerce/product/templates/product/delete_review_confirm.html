@@ -1,0 +1,38 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">⚠️ Confirm Delete</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Are you sure you want to delete your review?</p>
+
+                <div class="alert alert-warning">
+                    <strong>Product:</strong> {{ review.product.name }}<br>
+                    <strong>Your Rating:</strong> {{ review.rating }}★<br>
+                    <strong>Posted:</strong> {{ review.created_at|date:"F d, Y" }}
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="mb-0"><em>"{{ review.comment }}"</em></p>
+                    </div>
+                </div>
+
+                <p class="text-danger"><strong>This action cannot be undone!</strong></p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes, Delete Review</button>
+                    <a href="{% url 'product:product_detail' review.product.pk %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

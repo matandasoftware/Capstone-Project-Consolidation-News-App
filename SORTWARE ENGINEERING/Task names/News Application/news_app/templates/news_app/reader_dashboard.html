@@ -1,0 +1,70 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}Reader Dashboard - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Reader Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <a href="{% url 'browse_publishers' %}" class="btn btn-primary w-100">Browse Publishers</a>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'browse_journalists' %}" class="btn btn-primary w-100">Browse Journalists</a>
+    </div>
+</div>
+
+<h3>My Subscriptions</h3>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h5>Publishers</h5>
+        {% if subscribed_publishers %}
+            <ul class="list-group">
+                {% for publisher in subscribed_publishers %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ publisher.name }}
+                    <a href="{% url 'unsubscribe_publisher' publisher.pk %}" class="btn btn-sm btn-danger">Unsubscribe</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No publisher subscriptions yet.</p>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h5>Journalists</h5>
+        {% if subscribed_journalists %}
+            <ul class="list-group">
+                {% for journalist in subscribed_journalists %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ journalist.username }}
+                    <a href="{% url 'unsubscribe_journalist' journalist.pk %}" class="btn btn-sm btn-danger">Unsubscribe</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No journalist subscriptions yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+<h3>Latest Articles from Subscriptions</h3>
+{% if articles %}
+    <div class="row">
+        {% for article in articles %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text">{{ article.summary }}</p>
+                    <p class="text-muted small">By {{ article.author.username }} | {{ article.created_at|date:"M d, Y" }}</p>
+                    <a href="{% url 'article_detail' article.slug %}" class="btn btn-primary btn-sm">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No articles from your subscriptions yet.</p>
+{% endif %}
+{% endblock %}
