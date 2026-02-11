@@ -1,3 +1,14 @@
+"""
+Test Suite for the News Application.
+
+This module contains comprehensive automated tests including:
+- Model tests: CustomUser, Article, Publisher, Newsletter
+- View tests: Authentication, permissions, CRUD operations
+- API tests: Token authentication, endpoint responses
+- Integration tests: Complete user workflows
+
+Uses Django TestCase and REST Framework APIClient.
+"""
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -528,3 +539,4 @@ class ModelValidationTests(TestCase):
         
         # Slug should be auto-generated: lowercase with hyphens
         self.assertEqual(article.slug, 'test-article-title')  # Magic! ✨
+
