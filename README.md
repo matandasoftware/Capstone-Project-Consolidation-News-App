@@ -1,6 +1,34 @@
 # News Application - Django Project
 
 A comprehensive Django-based news application that allows readers to view articles published by publishers and independent journalists. The application features a role-based permission system, article approval workflow, email notifications, X (Twitter) integration, and RESTful API for third-party access.
+---
+## ⚠️ ALTERNATIVE DOWNLOAD - BACKUP ZIP FILE
+
+**If you experience file corruption or issues cloning this repository**, a clean backup ZIP file is available:
+
+📦 **[Download: Final-Capstone-News-App-BACKUP.zip](./Final-Capstone-News-App-BACKUP.zip)**
+
+**What's included in the ZIP:**
+- Complete source code with all module docstrings
+- Sphinx documentation source files (docs/)
+- Dockerfile and Docker configuration
+- README.md with full setup instructions
+- requirements.txt and all configuration files
+
+**What's excluded (can be regenerated):**
+- Virtual environment (venv/) - Create with: `python -m venv venv`
+- Git history (.git/) - Already on GitHub
+- Python cache (__pycache__/) - Auto-generated
+- Built documentation (docs/_build/) - Build with: `cd docs && make html`
+- IDE settings (.vs/) - Visual Studio temporary files
+
+**To use the ZIP:**
+1. Download and extract `Final-Capstone-News-App-BACKUP.zip`
+2. Follow the installation instructions below
+3. All functionality is preserved
+
+---
+
 
 ## 📋 Table of Contents
 - [Features](#features)
@@ -550,4 +578,5 @@ This project is part of an academic submission for HyperionDev.
 - Django REST Framework
 - X (Twitter) API
 - MariaDB/MySQL Database
+
 
