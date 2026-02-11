@@ -1,3 +1,14 @@
+"""
+REST API Serializers for the News Application.
+
+This module contains Django REST Framework serializers that convert
+model instances to JSON for API responses:
+- ArticleSerializer: Serializes Article objects with related data
+- PublisherSerializer: Serializes Publisher objects with article counts
+- JournalistSerializer: Serializes journalist user data
+
+Serializers handle data validation and nested relationships.
+"""
 from rest_framework import serializers
 from .models import Article, Publisher, CustomUser
 
@@ -76,3 +87,4 @@ class JournalistSerializer(serializers.ModelSerializer):
     def get_article_count(self, obj):
         """Return count of approved articles by this journalist"""
         return obj.articles.filter(is_approved=True).count()
+
