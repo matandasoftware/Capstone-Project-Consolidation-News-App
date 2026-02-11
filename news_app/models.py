@@ -1,3 +1,15 @@
+"""
+Django models for the News Application.
+
+This module defines the core data models including:
+- CustomUser: User model with role-based permissions (Reader, Editor, Journalist)
+- Publisher: News publishing organizations
+- Article: News articles with approval workflow
+- Newsletter: Independent newsletters from journalists
+
+Each model includes validation, custom methods, and relationships
+to support the application's role-based access control system.
+"""
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils.text import slugify
@@ -341,3 +353,4 @@ class Newsletter(models.Model):
         verbose_name = 'Newsletter'
         verbose_name_plural = 'Newsletters'
         ordering = ['-created_at']
+
