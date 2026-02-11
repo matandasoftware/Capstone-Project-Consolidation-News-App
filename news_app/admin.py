@@ -1,3 +1,14 @@
+"""
+Django Admin Configuration for the News Application.
+
+This module customizes the Django admin interface:
+- CustomUserAdmin: Manages users with role-based fields
+- ArticleAdmin: Manages articles with approval workflow
+- PublisherAdmin: Manages publishers
+- NewsletterAdmin: Manages newsletters
+
+Includes custom filters, search fields, and list displays.
+"""
 from django.contrib import admin
 from django.contrib.auth.admin import GroupAdmin
 from django.contrib.auth.models import Group
@@ -152,4 +163,5 @@ class NewsletterAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['has_add_permission'] = False
         return super().changelist_view(request, extra_context)
+
 
