@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+myenv/
+env/
+ENV/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.vs/
+.idea/
+
+# Environment
+.env
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Documentation build
+docs/_build/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
