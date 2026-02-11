@@ -1,0 +1,86 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}Journalist Dashboard - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Journalist Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <a href="{% url 'article_create' %}" class="btn btn-success w-100">Create New Article</a>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'newsletter_create' %}" class="btn btn-success w-100">Create New Newsletter</a>
+    </div>
+</div>
+
+<h3>My Articles</h3>
+{% if articles %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.publisher|default:"Independent" }}</td>
+                    <td>
+                        {% if article.is_approved %}
+                            <span class="badge bg-success">Approved</span>
+                        {% else %}
+                            <span class="badge bg-warning">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ article.created_at|date:"M d, Y" }}</td>
+                    <td>
+                        <a href="{% url 'article_update' article.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'article_delete' article.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p>No articles yet.</p>
+{% endif %}
+
+<h3 class="mt-5">My Newsletters</h3>
+{% if newsletters %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for newsletter in newsletters %}
+                <tr>
+                    <td>{{ newsletter.title }}</td>
+                    <td>{{ newsletter.publisher|default:"Independent" }}</td>
+                    <td>{{ newsletter.created_at|date:"M d, Y" }}</td>
+                    <td>
+                        <a href="{% url 'newsletter_update' newsletter.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'newsletter_delete' newsletter.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p>No newsletters yet.</p>
+{% endif %}
+{% endblock %}

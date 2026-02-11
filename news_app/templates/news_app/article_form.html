@@ -1,0 +1,296 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}{% if article %}Edit Article{% else %}Create Article{% endif %} - News App{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% if article %}Edit Article{% else %}Create New Article{% endif %}</h2>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please correct the following errors:</strong>
+        <ul>
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li><strong>{{ field }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="{{ form.title.id_for_label }}" class="form-label">Title *</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+            <div class="text-danger">{{ form.title.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.content.id_for_label }}" class="form-label">Content *</label>
+        {{ form.content }}
+        {% if form.content.errors %}
+            <div class="text-danger">{{ form.content.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.summary.id_for_label }}" class="form-label">Summary *</label>
+        {{ form.summary }}
+        {% if form.summary.errors %}
+            <div class="text-danger">{{ form.summary.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.publisher.id_for_label }}" class="form-label">Publisher</label>
+        
+        <!-- Publisher Dropdown (shown by default) -->
+        <div id="publisher-dropdown-section">
+            <div class="d-flex align-items-center gap-2">
+                <div class="flex-grow-1">
+                    {{ form.publisher }}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="showPublisherForm()">
+                    <i class="bi bi-plus-circle"></i> Create New
+                </button>
+            </div>
+            <small class="form-text text-muted">Can't find your publisher? Click "Create New" to add one.</small>
+            {% if form.publisher.errors %}
+                <div class="text-danger">{{ form.publisher.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Inline Publisher Creation Form (hidden by default) -->
+        <div id="publisher-form-section" style="display: none;">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <h6 class="card-title">Create New Publisher</h6>
+                    
+                    <div class="mb-2">
+                        <label for="new-publisher-name" class="form-label">Publisher Name *</label>
+                        <input type="text" id="new-publisher-name" class="form-control" placeholder="e.g., CNN News">
+                    </div>
+                    
+                    <div class="mb-2">
+                        <label for="new-publisher-description" class="form-label">Description</label>
+                        <textarea id="new-publisher-description" class="form-control" rows="2" placeholder="Brief description of the publisher"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="new-publisher-website" class="form-label">Website</label>
+                        <input type="url" id="new-publisher-website" class="form-control" placeholder="https://example.com">
+                    </div>
+                    
+                    <div id="publisher-creation-error" class="alert alert-danger d-none"></div>
+                    <div id="publisher-creation-success" class="alert alert-success d-none"></div>
+                    
+                    <button type="button" class="btn btn-primary btn-sm" onclick="createPublisher()">
+                        <span id="create-publisher-text">Create Publisher</span>
+                        <span id="create-publisher-spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="hidePublisherForm()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" onclick="console.log('Button clicked!'); return true;">{% if article %}Update{% else %}Create{% endif %} Article</button>
+    <a href="{% url 'journalist_dashboard' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+<script>
+    // Debug: Log when form is submitted
+    document.querySelector('form').addEventListener('submit', function(e) {
+        console.log('Form submit event triggered');
+        console.log('Title:', document.getElementById('{{ form.title.id_for_label }}').value);
+        console.log('Content:', document.getElementById('{{ form.content.id_for_label }}').value);
+        console.log('Summary:', document.getElementById('{{ form.summary.id_for_label }}').value);
+    });
+
+    // Add Bootstrap classes to form fields
+document.querySelectorAll('input[type="text"], textarea, select').forEach(function(element) {
+    element.classList.add('form-control');
+});
+    
+// Publisher Form Toggle Functions
+function showPublisherForm() {
+    document.getElementById('publisher-dropdown-section').style.display = 'none';
+    document.getElementById('publisher-form-section').style.display = 'block';
+    document.getElementById('new-publisher-name').focus();
+}
+    
+function hidePublisherForm() {
+    document.getElementById('publisher-form-section').style.display = 'none';
+    document.getElementById('publisher-dropdown-section').style.display = 'block';
+    // Clear form fields
+    document.getElementById('new-publisher-name').value = '';
+    document.getElementById('new-publisher-description').value = '';
+    document.getElementById('new-publisher-website').value = '';
+    // Hide messages
+    document.getElementById('publisher-creation-error').classList.add('d-none');
+    document.getElementById('publisher-creation-success').classList.add('d-none');
+}
+    
+    // Create Publisher via AJAX
+    function createPublisher() {
+        const name = document.getElementById('new-publisher-name').value.trim();
+        const description = document.getElementById('new-publisher-description').value.trim();
+        const website = document.getElementById('new-publisher-website').value.trim();
+        
+        // Validation
+        if (!name) {
+            showError('Publisher name is required.');
+            return;
+        }
+        
+        // Show loading spinner
+        document.getElementById('create-publisher-text').classList.add('d-none');
+        document.getElementById('create-publisher-spinner').classList.remove('d-none');
+        document.getElementById('publisher-creation-error').classList.add('d-none');
+        
+        // Get CSRF token
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        // Send AJAX request
+        fetch('{% url "publisher_create" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                name: name,
+                description: description,
+                website: website
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide spinner
+            document.getElementById('create-publisher-text').classList.remove('d-none');
+            document.getElementById('create-publisher-spinner').classList.add('d-none');
+            
+            if (data.success) {
+                // Show success message
+                showSuccess(data.message);
+                
+                // Refresh the entire publisher dropdown
+                refreshPublisherDropdown(data.publisher.id);
+                
+                // Hide form and show dropdown after 1 second
+                setTimeout(function() {
+                    hidePublisherForm();
+                }, 1500);
+            } else {
+                showError(data.message || 'Failed to create publisher.');
+                
+                // If publisher already exists, refresh dropdown to show it
+                if (data.message && data.message.includes('already exists')) {
+                    setTimeout(function() {
+                        refreshPublisherDropdown();
+                        setTimeout(hidePublisherForm, 500);
+                    }, 1500);
+                }
+            }
+        })
+        .catch(error => {
+            // Hide spinner
+            document.getElementById('create-publisher-text').classList.remove('d-none');
+            document.getElementById('create-publisher-spinner').classList.add('d-none');
+            
+            showError('Network error. Please try again.');
+            console.error('Error:', error);
+        });
+    }
+    
+    // Refresh publisher dropdown with all publishers from server
+    function refreshPublisherDropdown(selectId = null) {
+        fetch('{% url "api_publishers" %}')
+            .then(response => response.json())
+            .then(data => {
+                const publisherSelect = document.getElementById('{{ form.publisher.id_for_label }}');
+                
+                // Save current selection
+                const currentValue = publisherSelect.value;
+                
+                // Clear all options except the first (blank) option
+                while (publisherSelect.options.length > 1) {
+                    publisherSelect.remove(1);
+                }
+                
+                // Add all publishers from API
+                data.forEach(publisher => {
+                    const option = new Option(publisher.name, publisher.id);
+                    publisherSelect.add(option);
+                });
+                
+                // Select the newly created publisher or restore previous selection
+                if (selectId) {
+                    publisherSelect.value = selectId;
+                } else if (currentValue) {
+                    publisherSelect.value = currentValue;
+                }
+            })
+            .catch(error => {
+                console.error('Error refreshing publisher dropdown:', error);
+            });
+    }
+    
+    function showError(message) {
+        const errorDiv = document.getElementById('publisher-creation-error');
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('d-none');
+    }
+    
+    function showSuccess(message) {
+        const successDiv = document.getElementById('publisher-creation-success');
+        successDiv.textContent = message;
+        successDiv.classList.remove('d-none');
+    }
+    
+    // Auto-capitalize first letter of sentences
+    function capitalizeSentences(text) {
+        return text.replace(/(^\w|[.!?]\s+\w)/g, function(match) {
+            return match.toUpperCase();
+        });
+    }
+    
+    // Apply to title, content, and summary fields
+    const titleField = document.getElementById('{{ form.title.id_for_label }}');
+    const contentField = document.getElementById('{{ form.content.id_for_label }}');
+    const summaryField = document.getElementById('{{ form.summary.id_for_label }}');
+    
+    [titleField, contentField, summaryField].forEach(function(field) {
+        if (field) {
+            field.addEventListener('blur', function() {
+                this.value = capitalizeSentences(this.value);
+            });
+            
+            field.addEventListener('input', function(e) {
+                const cursorPos = this.selectionStart;
+                const textBeforeCursor = this.value.substring(0, cursorPos);
+                const textAfterCursor = this.value.substring(cursorPos);
+                
+                // Check if user just typed after a period, exclamation, or question mark
+                if (textBeforeCursor.match(/[.!?]\s+\w$/)) {
+                    const lastChar = textBeforeCursor.charAt(textBeforeCursor.length - 1);
+                    const capitalizedChar = lastChar.toUpperCase();
+                    this.value = textBeforeCursor.slice(0, -1) + capitalizedChar + textAfterCursor;
+                    this.setSelectionRange(cursorPos, cursorPos);
+                }
+                
+                // Capitalize first letter if it's the beginning of the field
+                if (cursorPos === 1 && textBeforeCursor.length === 1) {
+                    const capitalizedChar = textBeforeCursor.toUpperCase();
+                    this.value = capitalizedChar + textAfterCursor;
+                    this.setSelectionRange(cursorPos, cursorPos);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

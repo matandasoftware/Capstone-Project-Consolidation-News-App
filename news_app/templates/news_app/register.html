@@ -1,0 +1,37 @@
+{% extends 'news_app/base.html' %}
+
+{% block title %}Register - News App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h2 class="mb-4">Register</h2>
+        
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>Registration Failed!</strong>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <div class="alert alert-info">
+            <strong>Note:</strong> Editor accounts must be created by administrators. 
+            Please register as <strong>Reader</strong> or <strong>Journalist</strong>.
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a href="{% url 'login' %}" class="btn btn-link">Already have an account? Login</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
