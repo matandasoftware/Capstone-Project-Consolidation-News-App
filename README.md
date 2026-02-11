@@ -33,6 +33,48 @@ A comprehensive Django-based news application that allows readers to view articl
 - pip (Python package manager)
 - Git (for cloning the repository)
 
+
+## 🐳 Docker Setup (Alternative Method)
+
+You can run this application using Docker without manually setting up Python, virtual environment, or MariaDB.
+
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
+
+### Quick Start with Docker
+
+1. **Build the Docker image:**
+This creates a Docker image named `news-app` with all dependencies.
+
+2. **Run the container:**
+Access the application at: http://localhost:8000
+
+### Docker Commands Reference
+
+**Build image:**
+
+**Run container:**
+
+**Run container in detached mode (background):**
+
+**Stop container:**
+
+**Remove container:**
+
+**View logs:**
+
+**Access container shell:**
+
+### What the Dockerfile Does
+
+- **Base Image:** Uses Python 3.12 slim image
+- **Dependencies:** Installs MariaDB client libraries and Python packages
+- **Port:** Exposes port 8000 for Django development server
+- **Auto-start:** Runs `python manage.py runserver` on container start
+
+### Note
+The Dockerfile is configured for development. For production deployment, use a production-ready web server like Gunicorn with Nginx.
+
 ## 🚀 Installation & Setup
 
 ### 1. Clone the Repository
@@ -508,3 +550,4 @@ This project is part of an academic submission for HyperionDev.
 - Django REST Framework
 - X (Twitter) API
 - MariaDB/MySQL Database
+
