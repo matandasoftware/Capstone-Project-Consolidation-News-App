@@ -1,3 +1,14 @@
+"""
+URL Configuration for the News Application.
+
+This module defines all URL patterns routing requests to views:
+- Public URLs: Homepage, article details
+- Authentication URLs: Login, logout, registration
+- Role-specific URLs: Reader, journalist, and editor dashboards
+- API URLs: REST API endpoints with /api/ prefix
+
+Uses Django's path() function for clean URL patterns.
+"""
 from django.urls import path
 from . import views
 from . import api_views
