@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>news_app.signals &mdash; News Application 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            News Application
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">News Application</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">news_app.signals</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for news_app.signals</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Django Signals for the News Application.</span>
+
+<span class="sd">This module defines signal handlers for automated actions:</span>
+<span class="sd">- Article approval notifications: Email editors when articles submitted</span>
+<span class="sd">- User creation handlers: Set up initial permissions and groups</span>
+<span class="sd">- Post-save actions: Trigger related updates</span>
+
+<span class="sd">Uses Django&#39;s signal dispatcher for event-driven functionality.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models.signals</span><span class="w"> </span><span class="kn">import</span> <span class="n">post_save</span><span class="p">,</span> <span class="n">pre_save</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.dispatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">receiver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.core.mail</span><span class="w"> </span><span class="kn">import</span> <span class="n">send_mail</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.conf</span><span class="w"> </span><span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span><span class="p">,</span> <span class="n">CustomUser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.twitter_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">tweet_article</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="store_previous_approval_status">
+<a class="viewcode-back" href="../../modules.html#news_app.signals.store_previous_approval_status">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">pre_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Article</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">store_previous_approval_status</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Store the previous approval status before saving.</span>
+<span class="sd">    This allows us to detect when approval status changes from False to True.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">_previous_is_approved</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span><span class="o">.</span><span class="n">is_approved</span>
+        <span class="k">except</span> <span class="n">Article</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">_previous_is_approved</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">_previous_is_approved</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="handle_article_approval">
+<a class="viewcode-back" href="../../modules.html#news_app.signals.handle_article_approval">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Article</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_article_approval</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handle article approval by sending emails and posting to X.</span>
+<span class="sd">    Triggered when an article&#39;s approval status changes from False to True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">previous_approval</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="s1">&#39;_previous_is_approved&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">is_approved</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">previous_approval</span><span class="p">:</span>
+        <span class="n">send_email_to_subscribers</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+        <span class="n">tweet_article</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_subscribers_for_article">
+<a class="viewcode-back" href="../../modules.html#news_app.signals.get_subscribers_for_article">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_subscribers_for_article</span><span class="p">(</span><span class="n">article</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Collect all subscribers who should be notified about this article.</span>
+<span class="sd">    Includes subscribers to the publisher and subscribers to the journalist.</span>
+<span class="sd">    Returns a list of unique CustomUser objects.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">subscribers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    
+    <span class="c1"># Get subscribers to the publisher</span>
+    <span class="k">if</span> <span class="n">article</span><span class="o">.</span><span class="n">publisher</span><span class="p">:</span>
+        <span class="n">publisher_subscribers</span> <span class="o">=</span> <span class="n">article</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">subscribers</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">subscribers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">publisher_subscribers</span><span class="p">)</span>
+    
+    <span class="c1"># Get subscribers to the journalist</span>
+    <span class="n">journalist_subscribers</span> <span class="o">=</span> <span class="n">article</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">journalist_subscribers</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">subscribers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">journalist_subscribers</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">subscribers</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="send_email_to_subscribers">
+<a class="viewcode-back" href="../../modules.html#news_app.signals.send_email_to_subscribers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">send_email_to_subscribers</span><span class="p">(</span><span class="n">article</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Send email notification to all subscribers when article is approved.</span>
+<span class="sd">    Subscribers include those subscribed to the publisher or the journalist.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">subscribers</span> <span class="o">=</span> <span class="n">get_subscribers_for_article</span><span class="p">(</span><span class="n">article</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">subscribers</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No subscribers to notify for article: </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="c1"># Build article URL</span>
+    <span class="n">article_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://127.0.0.1:8000/article/</span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">slug</span><span class="si">}</span><span class="s2">/&quot;</span>
+    
+    <span class="c1"># Determine source information for email</span>
+    <span class="k">if</span> <span class="n">article</span><span class="o">.</span><span class="n">publisher</span><span class="p">:</span>
+        <span class="n">source_info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;from </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">source_info</span> <span class="o">=</span> <span class="s2">&quot;as an independent article&quot;</span>
+    
+    <span class="c1"># Send email to each subscriber</span>
+    <span class="k">for</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">subscribers</span><span class="p">:</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;New Article Published: </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span>
+        
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Hello </span><span class="si">{</span><span class="n">subscriber</span><span class="o">.</span><span class="n">first_name</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">,</span>
+
+<span class="s2">A new article has been published by </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">source_info</span><span class="si">}</span><span class="s2">.</span>
+
+<span class="s2">Title: </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="si">}</span>
+<span class="s2">Summary: </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">summary</span><span class="si">}</span>
+
+<span class="s2">Read the full article here: </span><span class="si">{</span><span class="n">article_url</span><span class="si">}</span>
+
+<span class="s2">---</span>
+<span class="s2">You received this email because you are subscribed to </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">publisher</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">.</span>
+<span class="s2">To manage your subscriptions, log in to your account.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">send_mail</span><span class="p">(</span>
+                <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+                <span class="n">from_email</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_FROM_EMAIL</span><span class="p">,</span>
+                <span class="n">recipient_list</span><span class="o">=</span><span class="p">[</span><span class="n">subscriber</span><span class="o">.</span><span class="n">email</span><span class="p">],</span>
+                <span class="n">fail_silently</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Email sent to </span><span class="si">{</span><span class="n">subscriber</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2"> for article: </span><span class="si">{</span><span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to send email to </span><span class="si">{</span><span class="n">subscriber</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="store_previous_role">
+<a class="viewcode-back" href="../../modules.html#news_app.signals.store_previous_role">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">pre_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">CustomUser</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">store_previous_role</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Store the previous role before saving.</span>
+<span class="sd">    This allows us to detect when a user&#39;s role changes.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">_previous_role</span> <span class="o">=</span> <span class="n">CustomUser</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span><span class="o">.</span><span class="n">role</span>
+        <span class="k">except</span> <span class="n">CustomUser</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">_previous_role</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">_previous_role</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="invalidate_user_sessions_on_role_change">
+<a class="viewcode-back" href="../../modules.html#news_app.signals.invalidate_user_sessions_on_role_change">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">CustomUser</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">invalidate_user_sessions_on_role_change</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    When a user&#39;s role changes, invalidate all their active sessions.</span>
+<span class="sd">    This forces them to log in again to get the updated role/permissions.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">created</span><span class="p">:</span>
+        <span class="n">previous_role</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="s1">&#39;_previous_role&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">previous_role</span> <span class="ow">and</span> <span class="n">previous_role</span> <span class="o">!=</span> <span class="n">instance</span><span class="o">.</span><span class="n">role</span><span class="p">:</span>
+            <span class="c1"># Role changed - invalidate all sessions for this user</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.sessions.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_user_model</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">django.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
+            
+            <span class="c1"># Get all active sessions</span>
+            <span class="n">active_sessions</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">expire_date__gte</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            
+            <span class="c1"># Check each session to see if it belongs to this user</span>
+            <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">active_sessions</span><span class="p">:</span>
+                <span class="n">session_data</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_decoded</span><span class="p">()</span>
+                <span class="n">session_user_id</span> <span class="o">=</span> <span class="n">session_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_auth_user_id&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">session_user_id</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">session_user_id</span><span class="p">)</span> <span class="o">==</span> <span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+                    <span class="c1"># Delete this session to force re-login</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalidated session for user </span><span class="si">{</span><span class="n">instance</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2"> due to role change from </span><span class="si">{</span><span class="n">previous_role</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">instance</span><span class="o">.</span><span class="n">role</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Mudau Pfarelo Channel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
