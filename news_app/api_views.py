@@ -1,3 +1,14 @@
+"""
+REST API Views for the News Application.
+
+This module contains API endpoints for external access:
+- get_articles: Retrieve filtered articles
+- get_article_detail: Get single article details
+- get_publishers: List all publishers with article counts
+- get_journalists: List journalists with their articles
+
+All endpoints require token authentication and appropriate permissions.
+"""
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -183,3 +194,4 @@ def create_article(request):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
