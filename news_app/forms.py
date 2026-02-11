@@ -1,3 +1,15 @@
+"""
+Forms for the News Application.
+
+This module defines Django forms for user input and validation:
+- CustomUserCreationForm: User registration with role selection
+- CustomUserChangeForm: User profile updates
+- ArticleForm: Create and edit news articles
+- NewsletterForm: Create and edit newsletters
+- PublisherForm: Create new publishers
+
+Forms include field validation and custom widgets for better UX.
+"""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser, Article, Newsletter, Publisher
@@ -42,6 +54,7 @@ class PublisherForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
         }
+
 
 
 
