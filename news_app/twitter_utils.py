@@ -1,3 +1,13 @@
+"""
+Twitter Integration Utilities for the News Application.
+
+This module handles Twitter API integration:
+- Tweet posting: Automatically share approved articles
+- Authentication: Twitter API credentials management
+- Error handling: Graceful fallbacks for API failures
+
+Uses Tweepy library for Twitter API communication.
+"""
 import tweepy
 from django.conf import settings
 import logging
@@ -77,3 +87,4 @@ def tweet_article(article):
         print(f"❌ Failed to tweet article: {e}")
         logger.error(f"Failed to tweet article: {e}")
         return None
+
