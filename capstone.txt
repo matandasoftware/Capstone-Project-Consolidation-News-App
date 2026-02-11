@@ -1,23 +1,5 @@
-GitHub Repository Link:
+GitHub Repository:
 https://github.com/matandasoftware/Capstone-Project-Consolidation-News-App
 
-⚠️ BACKUP ZIP FILE INCLUDED IN REPOSITORY
-Due to potential file corruption issues experienced in previous submissions,
-a clean backup ZIP file is included in the repository:
-- Filename: Final-Capstone-News-App-BACKUP.zip
-- Location: Root of repository
-- Direct link: https://github.com/matandasoftware/Capstone-Project-Consolidation-News-App/blob/master/Final-Capstone-News-App-BACKUP.zip
-
-Project: Django News Application - Final Capstone
-Features:
-- Git version control with branching (master, docs, container)
-- Comprehensive Sphinx documentation with module docstrings
-- Docker containerization with Dockerfile
-- Complete setup instructions in README.md
-
-Branches:
-- master: Main branch with all merged features
-- docs: Documentation branch with Sphinx setup
-- container: Docker containerization branch
-
-All code, documentation, Docker configuration, and backup ZIP pushed to GitHub.
+Backup ZIP:
+https://github.com/matandasoftware/Capstone-Project-Consolidation-News-App/blob/master/Final-Capstone-News-App-BACKUP.zip
