@@ -1,3 +1,16 @@
+"""
+Views for the News Application.
+
+This module contains all view functions that handle HTTP requests including:
+- Public views: Homepage, article details
+- Authentication: Login, logout, registration
+- Reader views: Dashboard, browse publishers/journalists, subscriptions
+- Journalist views: Create/edit articles and newsletters
+- Editor views: Approve articles, manage content
+- Publisher management: Create publishers on-the-fly
+
+Each view includes permission checks and role-based access control.
+"""
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
@@ -408,5 +421,6 @@ def publisher_create(request):
         form = PublisherForm()
     
     return render(request, 'news_app/publisher_form.html', {'form': form})
+
 
 
