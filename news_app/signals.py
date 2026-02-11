@@ -1,3 +1,13 @@
+"""
+Django Signals for the News Application.
+
+This module defines signal handlers for automated actions:
+- Article approval notifications: Email editors when articles submitted
+- User creation handlers: Set up initial permissions and groups
+- Post-save actions: Trigger related updates
+
+Uses Django's signal dispatcher for event-driven functionality.
+"""
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
@@ -149,5 +159,6 @@ def invalidate_user_sessions_on_role_change(sender, instance, created, **kwargs)
                     # Delete this session to force re-login
                     session.delete()
                     logger.info(f"Invalidated session for user {instance.username} due to role change from {previous_role} to {instance.role}")
+
 
 
