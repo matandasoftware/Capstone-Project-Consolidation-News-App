@@ -1,9 +1,23 @@
+"""
+Views for the News Application.
+
+This module contains all view functions that handle HTTP requests including:
+- Public views: Homepage, article details
+- Authentication: Login, logout, registration
+- Reader views: Dashboard, browse publishers/journalists, subscriptions
+- Journalist views: Create/edit articles and newsletters
+- Editor views: Approve articles
+- Publisher management: Create publishers on-the-fly
+
+Each view includes permission checks and role-based access control.
+"""
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils import timezone
 from django.db import models
+from django.http import JsonResponse
 from .models import CustomUser, Publisher, Article, Newsletter
 from .forms import UserRegistrationForm, ArticleForm, NewsletterForm, PublisherForm
 
@@ -352,7 +366,45 @@ def article_approve(request, pk):
 @login_required
 @permission_required('news_app.add_publisher', raise_exception=True)
 def publisher_create(request):
-    """Create a new publisher on the spot."""
+    """Create a new publisher. Supports both form submission and AJAX JSON requests."""
+    # Handle AJAX JSON request
+    if request.headers.get('Content-Type') == 'application/json':
+        import json
+        try:
+            data = json.loads(request.body)
+            name = data.get('name', '').strip()
+            description = data.get('description', '').strip()
+            website = data.get('website', '').strip()
+            
+            # Validation
+            if not name:
+                return JsonResponse({'success': False, 'message': 'Publisher name is required.'})
+            
+            # Check if publisher already exists
+            if Publisher.objects.filter(name__iexact=name).exists():
+                return JsonResponse({'success': False, 'message': f'Publisher "{name}" already exists.'})
+            
+            # Create publisher
+            publisher = Publisher.objects.create(
+                name=name,
+                description=description,
+                website=website
+            )
+            
+            return JsonResponse({
+                'success': True,
+                'message': f'Publisher "{publisher.name}" created successfully!',
+                'publisher': {
+                    'id': publisher.id,
+                    'name': publisher.name,
+                    'description': publisher.description,
+                    'website': publisher.website
+                }
+            })
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+    
+    # Handle regular form submission (for backward compatibility)
     if request.method == 'POST':
         form = PublisherForm(request.POST)
         if form.is_valid():

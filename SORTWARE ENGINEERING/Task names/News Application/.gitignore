@@ -21,6 +21,7 @@ db.sqlite3-journal
 
 # IDE
 .vscode/
+.vs/
 .idea/
 *.swp
 *.swo

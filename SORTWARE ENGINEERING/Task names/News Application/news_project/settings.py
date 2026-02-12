@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-bnwc-^mqdvkb&hr6@6zruk&t6pahdwy0(6fg5r@_9xpoq-8np#'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -77,8 +78,15 @@ WSGI_APPLICATION = 'news_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='3306'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
 
@@ -142,8 +150,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # X (TWITTER) API CONFIGURATION
-TWITTER_API_KEY = 'TnmWMTek8CftbTcSnJexrJ0CY'
-TWITTER_API_SECRET = '0BAwqBHMi4H9oYra8jcJp0jWEx66WeskqNCMQyC64LZB4V9OKR'
-TWITTER_ACCESS_TOKEN = '2016866366821666816-S4hY89OiyueUkyJ0sI4emAILiSvbS0'
-TWITTER_ACCESS_TOKEN_SECRET = 'eTI5lafYSatZTsb6uJIIMnOleuXE14HpjCxLvFfX0Os4p'
-TWITTER_ENABLED = True  # Set to False to disable X integration
+TWITTER_API_KEY = config('TWITTER_API_KEY', default='')
+TWITTER_API_SECRET = config('TWITTER_API_SECRET', default='')
+TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN', default='')
+TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET', default='')
+TWITTER_ENABLED = config('TWITTER_ENABLED', default=False, cast=bool)

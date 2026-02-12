@@ -1,3 +1,15 @@
+"""
+Django models for the News Application.
+
+This module defines the core data models including:
+- CustomUser: User model with role-based permissions
+- Publisher: News publishing organizations
+- Article: News articles with approval workflow
+- Newsletter: Independent newsletters from journalists
+
+Each model includes validation, custom methods, and relationships
+to support the application's role-based access control system.
+"""
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils.text import slugify
@@ -46,10 +58,20 @@ class CustomUser(AbstractUser):
         Also ensures role-specific fields are cleared for other roles.
         """
         is_new = self.pk is None
+        
+        # Track if role changed (for existing users)
+        role_changed = False
+        if not is_new:
+            try:
+                old_instance = CustomUser.objects.get(pk=self.pk)
+                role_changed = old_instance.role != self.role
+            except CustomUser.DoesNotExist:
+                pass
+        
         super().save(*args, **kwargs)
         
         # Assign user to appropriate group based on role
-        if is_new or 'role' in kwargs.get('update_fields', []):
+        if is_new or role_changed:
             self._assign_to_group()
     
     def _assign_to_group(self):

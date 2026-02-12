@@ -33,7 +33,6 @@ def handle_article_approval(sender, instance, created, **kwargs):
     previous_approval = getattr(instance, '_previous_is_approved', False)
     
     if instance.is_approved and not previous_approval:
-        print(f"\n📢 Article APPROVED: {instance.title}\n")
         send_email_to_subscribers(instance)
         tweet_article(instance)
 
@@ -108,4 +107,47 @@ To manage your subscriptions, log in to your account.
             print(f"Email sent to {subscriber.email} for article: {article.title}")
         except Exception as e:
             print(f"Failed to send email to {subscriber.email}: {str(e)}")
+
+
+@receiver(pre_save, sender=CustomUser)
+def store_previous_role(sender, instance, **kwargs):
+    '''
+    Store the previous role before saving.
+    This allows us to detect when a user's role changes.
+    '''
+    if instance.pk:
+        try:
+            instance._previous_role = CustomUser.objects.get(pk=instance.pk).role
+        except CustomUser.DoesNotExist:
+            instance._previous_role = None
+    else:
+        instance._previous_role = None
+
+
+@receiver(post_save, sender=CustomUser)
+def invalidate_user_sessions_on_role_change(sender, instance, created, **kwargs):
+    '''
+    When a user's role changes, invalidate all their active sessions.
+    This forces them to log in again to get the updated role/permissions.
+    '''
+    if not created:
+        previous_role = getattr(instance, '_previous_role', None)
+        if previous_role and previous_role != instance.role:
+            # Role changed - invalidate all sessions for this user
+            from django.contrib.sessions.models import Session
+            from django.contrib.auth import get_user_model
+            from django.utils import timezone
+            
+            # Get all active sessions
+            active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+            
+            # Check each session to see if it belongs to this user
+            for session in active_sessions:
+                session_data = session.get_decoded()
+                session_user_id = session_data.get('_auth_user_id')
+                if session_user_id and int(session_user_id) == instance.pk:
+                    # Delete this session to force re-login
+                    session.delete()
+                    logger.info(f"Invalidated session for user {instance.username} due to role change from {previous_role} to {instance.role}")
+
 
