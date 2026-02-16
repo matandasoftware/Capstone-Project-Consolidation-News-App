@@ -6,7 +6,7 @@ A comprehensive Django-based news application that allows readers to view articl
 
 **If you experience file corruption or issues cloning this repository**, a clean backup ZIP file is available:
 
-📦 **[Download: NewsApplication_Submission_SECURE.zip](./NewsApplication_Submission_SECURE.zip)**
+📦 **[Download: Final-Capstone-News-App-BACKUP.zip](./Final-Capstone-News-App-BACKUP.zip)**
 
 **What's included in the ZIP:**
 - Complete source code with all module docstrings
@@ -616,5 +616,6 @@ This project is part of an academic submission for HyperionDev.
 - Django REST Framework
 - X (Twitter) API
 - MariaDB/MySQL Database
+
 
 
