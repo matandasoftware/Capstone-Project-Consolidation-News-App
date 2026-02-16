@@ -6,7 +6,7 @@ A comprehensive Django-based news application that allows readers to view articl
 
 **If you experience file corruption or issues cloning this repository**, a clean backup ZIP file is available:
 
-📦 **[Download: Final-Capstone-News-App-BACKUP.zip](./Final-Capstone-News-App-BACKUP.zip)**
+📦 **[Download: NewsApplication_Submission_SECURE.zip](./NewsApplication_Submission_SECURE.zip)**
 
 **What's included in the ZIP:**
 - Complete source code with all module docstrings
@@ -72,26 +72,64 @@ You can run this application using Docker without manually setting up Python, vi
 ### Quick Start with Docker
 
 1. **Build the Docker image:**
+
+​```bash
+docker build -t news-app .
+​```
+
 This creates a Docker image named `news-app` with all dependencies.
 
 2. **Run the container:**
+
+​```bash
+docker run -p 8000:8000 news-app
+​```
+
 Access the application at: http://localhost:8000
 
 ### Docker Commands Reference
 
 **Build image:**
 
+​```bash
+docker build -t news-app .
+​```
+
 **Run container:**
+
+​```bash
+docker run -p 8000:8000 news-app
+​```
 
 **Run container in detached mode (background):**
 
+​```bash
+docker run -d -p 8000:8000 --name news-app-container news-app
+​```
+
 **Stop container:**
+
+​```bash
+docker stop news-app-container
+​```
 
 **Remove container:**
 
+​```bash
+docker rm news-app-container
+​```
+
 **View logs:**
 
+​```bash
+docker logs news-app-container
+​```
+
 **Access container shell:**
+
+​```bash
+docker exec -it news-app-container bash
+​```
 
 ### What the Dockerfile Does
 
